@@ -2,7 +2,8 @@ package stacksblockchainapi
 
 import (
 	"context"
-	"stacksblockchainapi/models"
+
+	"github.com/cbadawi/stacks-go-draft/models"
 
 	"github.com/apimatic/go-core-runtime/utilities"
 )

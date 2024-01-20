@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"stacksblockchainapi/errors"
-	"stacksblockchainapi/models"
+
+	"github.com/cbadawi/stacks-go-draft/errors"
+
+	"github.com/cbadawi/stacks-go-draft/models"
 
 	"github.com/apimatic/go-core-runtime/https"
 	"github.com/apimatic/go-core-runtime/utilities"

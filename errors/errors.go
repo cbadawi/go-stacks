@@ -7,7 +7,8 @@ package errors
 
 import (
 	"fmt"
-	"stacksblockchainapi/models"
+
+	"github.com/cbadawi/stacks-go-draft/models"
 
 	"github.com/apimatic/go-core-runtime/apiError"
 )
