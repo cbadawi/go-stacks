@@ -1,4 +1,4 @@
-module stacksblockchainapi
+module github.com/cbadawi/stacks-go-draft
 
 go 1.18
 
