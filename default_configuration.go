@@ -1,4 +1,4 @@
-package stacksblockchainapi
+package main
 
 import (
 	"net/http"

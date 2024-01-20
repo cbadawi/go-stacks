@@ -1,4 +1,4 @@
-package stacksblockchainapi
+package main
 
 import (
 	"github.com/apimatic/go-core-runtime/https"
