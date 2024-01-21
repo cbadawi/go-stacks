@@ -7,7 +7,9 @@ package stacksblockchainapi
 
 import (
 	"context"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/apimatic/go-core-runtime/https"
 )
@@ -55,13 +57,20 @@ type client struct {
 	transactionsController      TransactionsController
 	mempoolController           MempoolController
 	stackingController          StackingController
+	errorLog                    *log.Logger
+	infoLog                     *log.Logger
 }
 
 // NewClient is the constructor for creating a new client instance.
 // It takes a Configuration object as a parameter and returns the Client interface.
 func NewClient(configuration Configuration) ClientInterface {
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
 	client := &client{
 		configuration: configuration,
+		infoLog:       infoLog,
+		errorLog:      errorLog,
 	}
 
 	client.callBuilderFactory = callBuilderHandler(
@@ -69,7 +78,9 @@ func NewClient(configuration Configuration) ClientInterface {
 			if server == "" {
 				server = "default"
 			}
-			return getBaseUri(Server(server), client.configuration)
+			baseUri := getBaseUri(Server(server), client.configuration)
+			client.infoLog.Printf("base uri: %s \n", baseUri)
+			return baseUri
 		},
 		nil,
 		https.NewHttpClient(configuration.HttpConfiguration()),
@@ -94,6 +105,7 @@ func NewClient(configuration Configuration) ClientInterface {
 	client.transactionsController = *NewTransactionsController(*baseController)
 	client.mempoolController = *NewMempoolController(*baseController)
 	client.stackingController = *NewStackingController(*baseController)
+	client.infoLog.Println("setting up client")
 	return client
 }
 
