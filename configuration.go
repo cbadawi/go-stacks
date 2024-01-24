@@ -2,6 +2,8 @@ package stacksblockchainapi
 
 import (
 	"os"
+
+	"github.com/cbadawi/stacks-go-draft/logger"
 )
 
 // ConfigurationOptions represents a function type that can be used to apply options to the Configuration struct.
@@ -11,6 +13,7 @@ type ConfigurationOptions func(*Configuration)
 type Configuration struct {
 	environment       Environment
 	httpConfiguration HttpConfiguration
+	logger            *logger.Logger
 }
 
 // newConfiguration creates a new Configuration with the provided options.
@@ -34,6 +37,13 @@ func WithEnvironment(environment Environment) ConfigurationOptions {
 func WithHttpConfiguration(httpConfiguration HttpConfiguration) ConfigurationOptions {
 	return func(c *Configuration) {
 		c.httpConfiguration = httpConfiguration
+	}
+}
+
+// WithLogger is an option that sets the Logger in the Configuration.
+func WithLogger(loggerHandler *logger.Logger) ConfigurationOptions {
+	return func(c *Configuration) {
+		c.logger = loggerHandler
 	}
 }
 

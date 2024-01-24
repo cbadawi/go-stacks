@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/apimatic/go-core-runtime/https"
+	"github.com/cbadawi/stacks-go-draft/logger"
 )
 
 // callBuilderFactory is an interface that defines a method to get a CallBuilderFactory.
@@ -12,18 +13,25 @@ type callBuilderFactory interface {
 	GetCallBuilder() https.CallBuilderFactory
 }
 
+type callBuilderLogger struct {
+	cb     callBuilderFactory
+	logger *logger.Logger
+}
+
 // baseController represents a controller used as a base for other controllers.
 // It encapsulates common functionality required by controllers for making API call.
 type baseController struct {
 	callBuilder    callBuilderFactory
 	prepareRequest https.CallBuilderFactory
+	logger         *logger.Logger
 }
 
 // NewBaseController creates a new instance of baseController.
 // It takes a callBuilderFactory as a parameter and returns a pointer to the baseController.
-func NewBaseController(cb callBuilderFactory) *baseController {
-	baseController := baseController{callBuilder: cb}
+func NewBaseController(cbl callBuilderLogger) *baseController {
+	baseController := baseController{callBuilder: cbl.cb}
 	baseController.prepareRequest = baseController.callBuilder.GetCallBuilder()
+	baseController.logger = cbl.logger
 	return &baseController
 }
 

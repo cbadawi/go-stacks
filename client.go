@@ -7,9 +7,7 @@ package stacksblockchainapi
 
 import (
 	"context"
-	"log"
 	"net/http"
-	"os"
 
 	"github.com/apimatic/go-core-runtime/https"
 )
@@ -40,7 +38,7 @@ type ClientInterface interface {
 // client is an implementation of the Client interface.
 type client struct {
 	callBuilderFactory          https.CallBuilderFactory
-	configuration               Configuration
+	config                      Configuration
 	accountsController          AccountsController
 	blocksController            BlocksController
 	burnBlocksController        BurnBlocksController
@@ -57,20 +55,14 @@ type client struct {
 	transactionsController      TransactionsController
 	mempoolController           MempoolController
 	stackingController          StackingController
-	errorLog                    *log.Logger
-	infoLog                     *log.Logger
 }
 
 // NewClient is the constructor for creating a new client instance.
 // It takes a Configuration object as a parameter and returns the Client interface.
 func NewClient(configuration Configuration) ClientInterface {
-	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
 	client := &client{
-		configuration: configuration,
-		infoLog:       infoLog,
-		errorLog:      errorLog,
+		config: configuration,
 	}
 
 	client.callBuilderFactory = callBuilderHandler(
@@ -78,8 +70,7 @@ func NewClient(configuration Configuration) ClientInterface {
 			if server == "" {
 				server = "default"
 			}
-			baseUri := getBaseUri(Server(server), client.configuration)
-			client.infoLog.Printf("base uri: %s \n", baseUri)
+			baseUri := getBaseUri(Server(server), client.config)
 			return baseUri
 		},
 		nil,
@@ -88,7 +79,7 @@ func NewClient(configuration Configuration) ClientInterface {
 		withUserAgent(UserAgent),
 	)
 
-	baseController := NewBaseController(client)
+	baseController := NewBaseController(callBuilderLogger{cb: client, logger: client.config.logger})
 	client.accountsController = *NewAccountsController(*baseController)
 	client.blocksController = *NewBlocksController(*baseController)
 	client.burnBlocksController = *NewBurnBlocksController(*baseController)
@@ -105,13 +96,12 @@ func NewClient(configuration Configuration) ClientInterface {
 	client.transactionsController = *NewTransactionsController(*baseController)
 	client.mempoolController = *NewMempoolController(*baseController)
 	client.stackingController = *NewStackingController(*baseController)
-	client.infoLog.Println("setting up client")
 	return client
 }
 
 // Configuration returns the configuration instance of the client.
 func (c *client) Configuration() *Configuration {
-	return &c.configuration
+	return &c.config
 }
 
 // AccountsController returns the accountsController instance of the client.
@@ -199,6 +189,7 @@ func (c *client) GetCallBuilder() https.CallBuilderFactory {
 	return c.callBuilderFactory
 }
 
+// TODO allow users to configure base uri
 // getBaseUri returns the base URI based on the server and configuration.
 func getBaseUri(
 	server Server,

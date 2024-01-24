@@ -2,6 +2,9 @@ package stacksblockchainapi
 
 import (
 	"net/http"
+	"os"
+
+	"github.com/cbadawi/stacks-go-draft/logger"
 )
 
 // DefaultRetryConfiguration returns the default RetryConfiguration for HTTP requests.
@@ -30,8 +33,13 @@ func DefaultHttpConfiguration() HttpConfiguration {
 
 // DefaultConfiguration returns the default Configuration.
 func DefaultConfiguration() Configuration {
+	// Initialize a new jsonlog.Logger which writes any messages *at or above* the INFO
+	// severity level to the standard out stream.
+	loggerHandler := logger.NewLogger(os.Stdout, logger.LevelInfo)
+
 	return newConfiguration(
 		WithEnvironment(PRODUCTION),
 		WithHttpConfiguration(DefaultHttpConfiguration()),
+		WithLogger(loggerHandler),
 	)
 }

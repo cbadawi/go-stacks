@@ -39,6 +39,7 @@ func (a *AccountsController) GetAccountBalance(
 		"GET",
 		fmt.Sprintf("/extended/v1/address/%v/balances", principal),
 	)
+	// a.logger.TryLog(true, "!!!!testing trylog", nil)
 	req.Authenticate(true)
 	if unanchored != nil {
 		req.QueryParam("unanchored", *unanchored)
