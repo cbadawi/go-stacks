@@ -9,6 +9,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/cbadawi/stacks-go-draft/controllers"
+
 	"github.com/apimatic/go-core-runtime/https"
 )
 
@@ -17,44 +19,44 @@ const UserAgent = "APIMATIC 3.0"
 // Client is an interface representing the main client for accessing configuration and controllers.
 type ClientInterface interface {
 	Configuration() *Configuration
-	AccountsController() *AccountsController
-	BlocksController() *BlocksController
-	BurnBlocksController() *BurnBlocksController
-	FaucetsController() *FaucetsController
-	FeesController() *FeesController
-	InfoController() *InfoController
-	MicroblocksController() *MicroblocksController
-	NamesController() *NamesController
-	NonFungibleTokensController() *NonFungibleTokensController
-	RosettaController() *RosettaController
-	SearchController() *SearchController
-	SmartContractsController() *SmartContractsController
-	StackingRewardsController() *StackingRewardsController
-	TransactionsController() *TransactionsController
-	MempoolController() *MempoolController
-	StackingController() *StackingController
+	AccountsController() *controllers.AccountsController
+	BlocksController() *controllers.BlocksController
+	BurnBlocksController() *controllers.BurnBlocksController
+	FaucetsController() *controllers.FaucetsController
+	FeesController() *controllers.FeesController
+	InfoController() *controllers.InfoController
+	MicroblocksController() *controllers.MicroblocksController
+	NamesController() *controllers.NamesController
+	NonFungibleTokensController() *controllers.NonFungibleTokensController
+	RosettaController() *controllers.RosettaController
+	SearchController() *controllers.SearchController
+	SmartContractsController() *controllers.SmartContractsController
+	StackingRewardsController() *controllers.StackingRewardsController
+	TransactionsController() *controllers.TransactionsController
+	MempoolController() *controllers.MempoolController
+	StackingController() *controllers.StackingController
 }
 
 // client is an implementation of the Client interface.
 type client struct {
 	callBuilderFactory          https.CallBuilderFactory
 	config                      Configuration
-	accountsController          AccountsController
-	blocksController            BlocksController
-	burnBlocksController        BurnBlocksController
-	faucetsController           FaucetsController
-	feesController              FeesController
-	infoController              InfoController
-	microblocksController       MicroblocksController
-	namesController             NamesController
-	nonFungibleTokensController NonFungibleTokensController
-	rosettaController           RosettaController
-	searchController            SearchController
-	smartContractsController    SmartContractsController
-	stackingRewardsController   StackingRewardsController
-	transactionsController      TransactionsController
-	mempoolController           MempoolController
-	stackingController          StackingController
+	accountsController          controllers.AccountsController
+	blocksController            controllers.BlocksController
+	burnBlocksController        controllers.BurnBlocksController
+	faucetsController           controllers.FaucetsController
+	feesController              controllers.FeesController
+	infoController              controllers.InfoController
+	microblocksController       controllers.MicroblocksController
+	namesController             controllers.NamesController
+	nonFungibleTokensController controllers.NonFungibleTokensController
+	rosettaController           controllers.RosettaController
+	searchController            controllers.SearchController
+	smartContractsController    controllers.SmartContractsController
+	stackingRewardsController   controllers.StackingRewardsController
+	transactionsController      controllers.TransactionsController
+	mempoolController           controllers.MempoolController
+	stackingController          controllers.StackingController
 }
 
 // NewClient is the constructor for creating a new client instance.
@@ -79,23 +81,23 @@ func NewClient(configuration Configuration) ClientInterface {
 		withUserAgent(UserAgent),
 	)
 
-	baseController := NewBaseController(callBuilderLogger{cb: client, logger: client.config.logger})
-	client.accountsController = *NewAccountsController(*baseController)
-	client.blocksController = *NewBlocksController(*baseController)
-	client.burnBlocksController = *NewBurnBlocksController(*baseController)
-	client.faucetsController = *NewFaucetsController(*baseController)
-	client.feesController = *NewFeesController(*baseController)
-	client.infoController = *NewInfoController(*baseController)
-	client.microblocksController = *NewMicroblocksController(*baseController)
-	client.namesController = *NewNamesController(*baseController)
-	client.nonFungibleTokensController = *NewNonFungibleTokensController(*baseController)
-	client.rosettaController = *NewRosettaController(*baseController)
-	client.searchController = *NewSearchController(*baseController)
-	client.smartContractsController = *NewSmartContractsController(*baseController)
-	client.stackingRewardsController = *NewStackingRewardsController(*baseController)
-	client.transactionsController = *NewTransactionsController(*baseController)
-	client.mempoolController = *NewMempoolController(*baseController)
-	client.stackingController = *NewStackingController(*baseController)
+	baseController := controllers.NewBaseController(controllers.CallBuilderLogger{Cb: client, Logger: client.config.logger})
+	client.accountsController = *controllers.NewAccountsController(*baseController)
+	client.blocksController = *controllers.NewBlocksController(*baseController)
+	client.burnBlocksController = *controllers.NewBurnBlocksController(*baseController)
+	client.faucetsController = *controllers.NewFaucetsController(*baseController)
+	client.feesController = *controllers.NewFeesController(*baseController)
+	client.infoController = *controllers.NewInfoController(*baseController)
+	client.microblocksController = *controllers.NewMicroblocksController(*baseController)
+	client.namesController = *controllers.NewNamesController(*baseController)
+	client.nonFungibleTokensController = *controllers.NewNonFungibleTokensController(*baseController)
+	client.rosettaController = *controllers.NewRosettaController(*baseController)
+	client.searchController = *controllers.NewSearchController(*baseController)
+	client.smartContractsController = *controllers.NewSmartContractsController(*baseController)
+	client.stackingRewardsController = *controllers.NewStackingRewardsController(*baseController)
+	client.transactionsController = *controllers.NewTransactionsController(*baseController)
+	client.mempoolController = *controllers.NewMempoolController(*baseController)
+	client.stackingController = *controllers.NewStackingController(*baseController)
 	return client
 }
 
@@ -105,82 +107,82 @@ func (c *client) Configuration() *Configuration {
 }
 
 // AccountsController returns the accountsController instance of the client.
-func (c *client) AccountsController() *AccountsController {
+func (c *client) AccountsController() *controllers.AccountsController {
 	return &c.accountsController
 }
 
 // BlocksController returns the blocksController instance of the client.
-func (c *client) BlocksController() *BlocksController {
+func (c *client) BlocksController() *controllers.BlocksController {
 	return &c.blocksController
 }
 
 // BurnBlocksController returns the burnBlocksController instance of the client.
-func (c *client) BurnBlocksController() *BurnBlocksController {
+func (c *client) BurnBlocksController() *controllers.BurnBlocksController {
 	return &c.burnBlocksController
 }
 
 // FaucetsController returns the faucetsController instance of the client.
-func (c *client) FaucetsController() *FaucetsController {
+func (c *client) FaucetsController() *controllers.FaucetsController {
 	return &c.faucetsController
 }
 
 // FeesController returns the feesController instance of the client.
-func (c *client) FeesController() *FeesController {
+func (c *client) FeesController() *controllers.FeesController {
 	return &c.feesController
 }
 
 // InfoController returns the infoController instance of the client.
-func (c *client) InfoController() *InfoController {
+func (c *client) InfoController() *controllers.InfoController {
 	return &c.infoController
 }
 
 // MicroblocksController returns the microblocksController instance of the client.
-func (c *client) MicroblocksController() *MicroblocksController {
+func (c *client) MicroblocksController() *controllers.MicroblocksController {
 	return &c.microblocksController
 }
 
 // NamesController returns the namesController instance of the client.
-func (c *client) NamesController() *NamesController {
+func (c *client) NamesController() *controllers.NamesController {
 	return &c.namesController
 }
 
 // NonFungibleTokensController returns the nonFungibleTokensController instance of the client.
-func (c *client) NonFungibleTokensController() *NonFungibleTokensController {
+func (c *client) NonFungibleTokensController() *controllers.NonFungibleTokensController {
 	return &c.nonFungibleTokensController
 }
 
 // RosettaController returns the rosettaController instance of the client.
-func (c *client) RosettaController() *RosettaController {
+func (c *client) RosettaController() *controllers.RosettaController {
 	return &c.rosettaController
 }
 
 // SearchController returns the searchController instance of the client.
-func (c *client) SearchController() *SearchController {
+func (c *client) SearchController() *controllers.SearchController {
 	return &c.searchController
 }
 
 // SmartContractsController returns the smartContractsController instance of the client.
-func (c *client) SmartContractsController() *SmartContractsController {
+func (c *client) SmartContractsController() *controllers.SmartContractsController {
 	return &c.smartContractsController
 }
 
 // StackingRewardsController returns the stackingRewardsController instance of the client.
-func (c *client) StackingRewardsController() *StackingRewardsController {
+func (c *client) StackingRewardsController() *controllers.StackingRewardsController {
 	return &c.stackingRewardsController
 }
 
 // TransactionsController returns the transactionsController instance of the client.
-func (c *client) TransactionsController() *TransactionsController {
+func (c *client) TransactionsController() *controllers.TransactionsController {
 	return &c.transactionsController
 }
 
 // MempoolController returns the mempoolController instance of the client.
-func (c *client) MempoolController() *MempoolController {
+func (c *client) MempoolController() *controllers.MempoolController {
 	return &c.mempoolController
 }
 
 // StackingController returns the stackingController instance of the client.
-func (c *client) StackingController() *StackingController {
+func (c *client) StackingController() *controllers.StackingController {
 	return &c.stackingController
 }
 

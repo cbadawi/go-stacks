@@ -1,4 +1,4 @@
-package stacksblockchainapi
+package controllers
 
 import (
 	"context"
@@ -34,12 +34,13 @@ func (a *AccountsController) GetAccountBalance(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressBalanceResponse],
 	error) {
+	a.logger.PrintInfo("!!!!testing trylog", nil)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
 		fmt.Sprintf("/extended/v1/address/%v/balances", principal),
 	)
-	// a.logger.TryLog(true, "!!!!testing trylog", nil)
+	fmt.Println(a.baseController.logger)
 	req.Authenticate(true)
 	if unanchored != nil {
 		req.QueryParam("unanchored", *unanchored)

@@ -10,7 +10,7 @@ import (
 // TestRosettaControllerTestRosettaNetworkList tests the behavior of the RosettaController's
 func TestRosettaControllerTestRosettaNetworkList(t *testing.T) {
 	ctx := context.Background()
-	apiResponse, err := rosettaController.RosettaNetworkList(ctx)
+	apiResponse, err := RosettaController.RosettaNetworkList(ctx)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}

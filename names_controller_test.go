@@ -11,7 +11,7 @@ import (
 func TestNamesControllerTestGetNamespacePrice(t *testing.T) {
 	ctx := context.Background()
 	tld := "id"
-	apiResponse, err := namesController.GetNamespacePrice(ctx, tld)
+	apiResponse, err := NamesController.GetNamespacePrice(ctx, tld)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}
@@ -26,7 +26,7 @@ func TestNamesControllerTestGetNamespacePrice(t *testing.T) {
 func TestNamesControllerTestGetNamePrice(t *testing.T) {
 	ctx := context.Background()
 	name := "muneeb.id"
-	apiResponse, err := namesController.GetNamePrice(ctx, name)
+	apiResponse, err := NamesController.GetNamePrice(ctx, name)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}
@@ -41,7 +41,7 @@ func TestNamesControllerTestGetNamePrice(t *testing.T) {
 func TestNamesControllerTestFetchZoneFile(t *testing.T) {
 	ctx := context.Background()
 	name := "bar.test"
-	apiResponse, err := namesController.FetchZoneFile(ctx, name)
+	apiResponse, err := NamesController.FetchZoneFile(ctx, name)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}
@@ -59,7 +59,7 @@ func TestNamesControllerTestGetHistoricalZoneFile(t *testing.T) {
 	ctx := context.Background()
 	name := "muneeb.id"
 	zoneFileHash := "b100a68235244b012854a95f9114695679002af9"
-	apiResponse, err := namesController.GetHistoricalZoneFile(ctx, name, zoneFileHash)
+	apiResponse, err := NamesController.GetHistoricalZoneFile(ctx, name, zoneFileHash)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}

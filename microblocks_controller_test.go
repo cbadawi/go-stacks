@@ -12,7 +12,7 @@ func TestMicroblocksControllerTestGetMicroblockList(t *testing.T) {
 	ctx := context.Background()
 	limit := 20
 	offset := 42000
-	apiResponse, err := microblocksController.GetMicroblockList(ctx, &limit, &offset)
+	apiResponse, err := MicroblocksController.GetMicroblockList(ctx, &limit, &offset)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestMicroblocksControllerTestGetMicroblockList(t *testing.T) {
 func TestMicroblocksControllerTestGetMicroblockByHash(t *testing.T) {
 	ctx := context.Background()
 	hash := "0x3bfcdf84b3012adb544cf0f6df4835f93418c2269a3881885e27b3d58eb82d47"
-	apiResponse, err := microblocksController.GetMicroblockByHash(ctx, hash)
+	apiResponse, err := MicroblocksController.GetMicroblockByHash(ctx, hash)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}
@@ -41,7 +41,7 @@ func TestMicroblocksControllerTestGetMicroblockByHash(t *testing.T) {
 // TestMicroblocksControllerTestGetUnanchoredTxs tests the behavior of the MicroblocksController's
 func TestMicroblocksControllerTestGetUnanchoredTxs(t *testing.T) {
 	ctx := context.Background()
-	apiResponse, err := microblocksController.GetUnanchoredTxs(ctx)
+	apiResponse, err := MicroblocksController.GetUnanchoredTxs(ctx)
 	if err != nil {
 		t.Errorf("Endpoint call failed: %v", err)
 	}

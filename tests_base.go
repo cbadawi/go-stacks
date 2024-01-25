@@ -1,18 +1,22 @@
 package stacksblockchainapi
 
-var feesController FeesController
+import (
+	"github.com/cbadawi/stacks-go-draft/controllers"
+)
 
-var microblocksController MicroblocksController
+var FeesController controllers.FeesController
 
-var namesController NamesController
+var MicroblocksController controllers.MicroblocksController
 
-var rosettaController RosettaController
+var NamesController controllers.NamesController
+
+var RosettaController controllers.RosettaController
 
 // init is an initialization function that sets up the controllers.
 // It creates a configuration from the environment with a specified HTTP configuration and initializes the client.
 // Then, it assigns the different controllers from the client to the corresponding variables for further use.
 func init() {
-	config := CreateConfigurationFromEnvironment(
+	configuration := CreateConfigurationFromEnvironment(
 		WithHttpConfiguration(
 			CreateHttpConfiguration(
 				WithTimeout(30),
@@ -20,10 +24,10 @@ func init() {
 		),
 	)
 
-	client := NewClient(config)
+	client := NewClient(configuration)
 
-	feesController = *client.FeesController()
-	microblocksController = *client.MicroblocksController()
-	namesController = *client.NamesController()
-	rosettaController = *client.RosettaController()
+	FeesController = *client.FeesController()
+	MicroblocksController = *client.MicroblocksController()
+	NamesController = *client.NamesController()
+	RosettaController = *client.RosettaController()
 }
