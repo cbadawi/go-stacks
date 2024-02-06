@@ -44,31 +44,6 @@ func validateResponse(response http.Response) error {
 	return nil
 }
 
-type JsonCaller func() (*json.Decoder, *http.Response, error)
-
-func (jc JsonCaller) Call() (any, *http.Response, error) {
-	decoder, resp, err := jc()
-	if err != nil {
-		return nil, resp, err
-	}
-	return decoder, resp, err
-}
-
-// Implement the interface for the other function signature (string, *http.Response, error)
-type StringCaller func() (string, *http.Response, error)
-
-func (sc StringCaller) Call() (any, *http.Response, error) {
-	str, resp, err := sc()
-	if err != nil {
-		return nil, resp, err
-	}
-	return str, resp, err
-}
-
-type CallFunc interface {
-	Call() (any, *http.Response, error)
-}
-
 func (bc baseController) logCall(req https.CallBuilder, path string, reqType string) (interface{}, *http.Response, error) {
 	bc.logger.TryLog(true, "API Call", map[string]string{"path": path}, logger.LevelInfo)
 	var result any
