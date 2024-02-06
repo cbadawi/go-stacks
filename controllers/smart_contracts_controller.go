@@ -33,10 +33,11 @@ func (s *SmartContractsController) GetContractById(
 	unanchored *bool) (
 	models.ApiResponse[models.SmartContract7],
 	error) {
+	path := fmt.Sprintf("/extended/v1/contract/%v", contractId)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/contract/%v", contractId),
+		path,
 	)
 	req.Authenticate(true)
 	if unanchored != nil {
@@ -44,7 +45,7 @@ func (s *SmartContractsController) GetContractById(
 	}
 
 	var result models.SmartContract7
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -75,7 +76,8 @@ func (s *SmartContractsController) GetContractsByTrait(
 	offset *int) (
 	models.ApiResponse[models.ContractListResponse],
 	error) {
-	req := s.prepareRequest(ctx, "GET", "/extended/v1/contract/by_trait")
+	path := "/extended/v1/contract/by_trait"
+	req := s.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	req.QueryParam("trait_abi", traitAbi)
 	if limit != nil {
@@ -85,7 +87,7 @@ func (s *SmartContractsController) GetContractsByTrait(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.ContractListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -114,10 +116,11 @@ func (s *SmartContractsController) GetContractEventsById(
 	unanchored *bool) (
 	models.ApiResponse[models.TransactionEvent],
 	error) {
+	path := fmt.Sprintf("/extended/v1/contract/%v/events", contractId)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/contract/%v/events", contractId),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -131,7 +134,7 @@ func (s *SmartContractsController) GetContractEventsById(
 	}
 
 	var result models.TransactionEvent
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -159,10 +162,11 @@ func (s *SmartContractsController) GetContractInterface(
 	tip *string) (
 	models.ApiResponse[models.ContractInterfaceResponse],
 	error) {
+	path := fmt.Sprintf("/v2/contracts/interface/%v/%v", contractAddress, contractName)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v2/contracts/interface/%v/%v", contractAddress, contractName),
+		path,
 	)
 	req.Authenticate(true)
 	if tip != nil {
@@ -170,7 +174,7 @@ func (s *SmartContractsController) GetContractInterface(
 	}
 
 	var result models.ContractInterfaceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -203,10 +207,11 @@ func (s *SmartContractsController) GetContractDataMapEntry(
 	tip *string) (
 	models.ApiResponse[models.MapEntryResponse],
 	error) {
+	path := fmt.Sprintf("/v2/map_entry/%v/%v/%v", contractAddress, contractName, mapName)
 	req := s.prepareRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v2/map_entry/%v/%v/%v", contractAddress, contractName, mapName),
+		path,
 	)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
@@ -219,7 +224,7 @@ func (s *SmartContractsController) GetContractDataMapEntry(
 	req.Text(body)
 
 	var result models.MapEntryResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -251,10 +256,11 @@ func (s *SmartContractsController) GetContractSource(
 	tip *string) (
 	models.ApiResponse[models.ContractSourceResponse],
 	error) {
+	path := fmt.Sprintf("/v2/contracts/source/%v/%v", contractAddress, contractName)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v2/contracts/source/%v/%v", contractAddress, contractName),
+		path,
 	)
 	req.Authenticate(true)
 	if proof != nil {
@@ -265,7 +271,7 @@ func (s *SmartContractsController) GetContractSource(
 	}
 
 	var result models.ContractSourceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -296,10 +302,11 @@ func (s *SmartContractsController) CallReadOnlyFunction(
 	tip *string) (
 	models.ApiResponse[models.ReadOnlyFunctionSuccessResponse],
 	error) {
+	path := fmt.Sprintf("/v2/contracts/call-read/%v/%v/%v", contractAddress, contractName, functionName)
 	req := s.prepareRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v2/contracts/call-read/%v/%v/%v", contractAddress, contractName, functionName),
+		path,
 	)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
@@ -309,7 +316,7 @@ func (s *SmartContractsController) CallReadOnlyFunction(
 	req.Json(body)
 
 	var result models.ReadOnlyFunctionSuccessResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

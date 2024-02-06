@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cbadawi/stacks-go-draft/models"
 
@@ -36,7 +37,8 @@ func (n *NonFungibleTokensController) GetNftHoldings(
 	txMetadata *bool) (
 	models.ApiResponse[models.NonFungibleTokenHoldingsList],
 	error) {
-	req := n.prepareRequest(ctx, "GET", "/extended/v1/tokens/nft/holdings")
+	path := fmt.Sprintf("/extended/v1/tokens/nft/holdings")
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	req.QueryParam("principal", principal)
 	if assetIdentifiers != nil {
@@ -55,7 +57,7 @@ func (n *NonFungibleTokensController) GetNftHoldings(
 		req.QueryParam("tx_metadata", *txMetadata)
 	}
 	var result models.NonFungibleTokenHoldingsList
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -87,7 +89,8 @@ func (n *NonFungibleTokensController) GetNftHistory(
 	txMetadata *bool) (
 	models.ApiResponse[models.NonFungibleTokenHistoryEventList],
 	error) {
-	req := n.prepareRequest(ctx, "GET", "/extended/v1/tokens/nft/history")
+	path := fmt.Sprintf("/extended/v1/tokens/nft/history")
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	req.QueryParam("asset_identifier", assetIdentifier)
 	req.QueryParam("value", value)
@@ -104,7 +107,7 @@ func (n *NonFungibleTokensController) GetNftHistory(
 		req.QueryParam("tx_metadata", *txMetadata)
 	}
 	var result models.NonFungibleTokenHistoryEventList
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -135,7 +138,8 @@ func (n *NonFungibleTokensController) GetNftMints(
 	txMetadata *bool) (
 	models.ApiResponse[models.NonFungibleTokenMintList],
 	error) {
-	req := n.prepareRequest(ctx, "GET", "/extended/v1/tokens/nft/mints")
+	path := fmt.Sprintf("/extended/v1/tokens/nft/mints")
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	req.QueryParam("asset_identifier", assetIdentifier)
 	if limit != nil {
@@ -151,7 +155,7 @@ func (n *NonFungibleTokensController) GetNftMints(
 		req.QueryParam("tx_metadata", *txMetadata)
 	}
 	var result models.NonFungibleTokenMintList
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

@@ -4,11 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/apimatic/go-core-runtime/utilities"
 	"github.com/cbadawi/stacks-go-draft/errors"
 
 	"github.com/cbadawi/stacks-go-draft/models"
-
-	"github.com/apimatic/go-core-runtime/utilities"
 )
 
 // AccountsController represents a controller struct.
@@ -34,14 +33,15 @@ func (a *AccountsController) GetAccountBalance(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressBalanceResponse],
 	error) {
-	a.logger.PrintInfo("!!!!testing trylog", nil)
+	path := fmt.Sprintf("/extended/v1/address/%v/balances", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/balances", principal),
+		path,
 	)
-	fmt.Println(a.baseController.logger)
+	req.Header("Content-Type", "application/json")
 	req.Authenticate(true)
+
 	if unanchored != nil {
 		req.QueryParam("unanchored", *unanchored)
 	}
@@ -50,7 +50,7 @@ func (a *AccountsController) GetAccountBalance(
 	}
 
 	var result models.AddressBalanceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -78,10 +78,11 @@ func (a *AccountsController) GetAccountStxBalance(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressStxBalanceResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/stx", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/stx", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if unanchored != nil {
@@ -92,7 +93,7 @@ func (a *AccountsController) GetAccountStxBalance(
 	}
 
 	var result models.AddressStxBalanceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -124,10 +125,11 @@ func (a *AccountsController) GetAccountTransactions(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressTransactionsListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/transactions", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/transactions", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -147,7 +149,8 @@ func (a *AccountsController) GetAccountTransactions(
 	}
 
 	var result models.AddressTransactionsListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
+
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -174,15 +177,16 @@ func (a *AccountsController) GetSingleTransactionWithTransfers(
 	txId string) (
 	models.ApiResponse[models.AddressTransactionWithTransfers],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/%v/with_transfers", principal, txId)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/%v/with_transfers", principal, txId),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.AddressTransactionWithTransfers
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -216,10 +220,11 @@ func (a *AccountsController) GetAccountTransactionsWithTransfers(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressTransactionsWithTransfersListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/transactions_with_transfers", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/transactions_with_transfers", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -239,7 +244,8 @@ func (a *AccountsController) GetAccountTransactionsWithTransfers(
 	}
 
 	var result models.AddressTransactionsWithTransfersListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
+
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -267,10 +273,11 @@ func (a *AccountsController) GetAccountNonces(
 	blockHash *string) (
 	models.ApiResponse[models.AddressNonces],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/nonces", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/nonces", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if blockHeight != nil {
@@ -281,7 +288,7 @@ func (a *AccountsController) GetAccountNonces(
 	}
 
 	var result models.AddressNonces
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -311,10 +318,11 @@ func (a *AccountsController) GetAccountAssets(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressAssetsListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/assets", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/assets", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -331,7 +339,7 @@ func (a *AccountsController) GetAccountAssets(
 	}
 
 	var result models.AddressAssetsListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -363,10 +371,11 @@ func (a *AccountsController) GetAccountInbound(
 	untilBlock *string) (
 	models.ApiResponse[models.AddressStxInboundListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/address/%v/stx_inbound", principal)
 	req := a.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/stx_inbound", principal),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -386,7 +395,7 @@ func (a *AccountsController) GetAccountInbound(
 	}
 
 	var result models.AddressStxInboundListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -416,7 +425,8 @@ func (a *AccountsController) GetAccountInfo(
 	tip *string) (
 	models.ApiResponse[models.AccountDataResponse],
 	error) {
-	req := a.prepareRequest(ctx, "GET", fmt.Sprintf("/v2/accounts/%v", principal))
+	path := fmt.Sprintf("/v2/accounts/%v", principal)
+	req := a.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if proof != nil {
 		req.QueryParam("proof", *proof)
@@ -426,7 +436,7 @@ func (a *AccountsController) GetAccountInfo(
 	}
 
 	var result models.AccountDataResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := a.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

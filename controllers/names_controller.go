@@ -32,11 +32,12 @@ func (n *NamesController) GetNamespacePrice(
 	tld string) (
 	models.ApiResponse[models.BnsGetNamespacePriceResponse],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v2/prices/namespaces/%v", tld))
+	path := fmt.Sprintf("/v2/prices/namespaces/%v", tld)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.BnsGetNamespacePriceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -62,11 +63,12 @@ func (n *NamesController) GetNamePrice(
 	name string) (
 	models.ApiResponse[models.BnsGetNamePriceResponse],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v2/prices/names/%v", name))
+	path := fmt.Sprintf("/v2/prices/names/%v", name)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.BnsGetNamePriceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -90,10 +92,11 @@ func (n *NamesController) GetNamePrice(
 func (n *NamesController) GetAllNamespaces(ctx context.Context) (
 	models.ApiResponse[models.BnsGetAllNamespacesResponse],
 	error) {
-	req := n.prepareRequest(ctx, "GET", "/v1/namespaces")
+	path := "/v1/namespaces"
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.BnsGetAllNamespacesResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -120,14 +123,15 @@ func (n *NamesController) GetNamespaceNames(
 	page *int) (
 	models.ApiResponse[[]string],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v1/namespaces/%v/names", tld))
+	path := fmt.Sprintf("/v1/namespaces/%v/names", tld)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if page != nil {
 		req.QueryParam("page", *page)
 	}
 
 	var result []string
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -159,13 +163,14 @@ func (n *NamesController) GetAllNames(
 	page *int) (
 	models.ApiResponse[[]string],
 	error) {
-	req := n.prepareRequest(ctx, "GET", "/v1/names")
+	path := "/v1/names"
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if page != nil {
 		req.QueryParam("page", *page)
 	}
 	var result []string
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -194,11 +199,12 @@ func (n *NamesController) GetNameInfo(
 	name string) (
 	models.ApiResponse[models.BnsGetNameInfoResponse],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v1/names/%v", name))
+	path := fmt.Sprintf("/v1/names/%v", name)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.BnsGetNameInfoResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -230,11 +236,12 @@ func (n *NamesController) FetchSubdomainsListForName(
 	name string) (
 	models.ApiResponse[[]string],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v1/names/%v/subdomains", name))
+	path := fmt.Sprintf("/v1/names/%v/subdomains", name)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result []string
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -260,11 +267,12 @@ func (n *NamesController) FetchZoneFile(
 	name string) (
 	models.ApiResponse[models.BnsFetchFileZoneResponse2],
 	error) {
-	req := n.prepareRequest(ctx, "GET", fmt.Sprintf("/v1/names/%v/zonefile", name))
+	path := fmt.Sprintf("/v1/names/%v/zonefile", name)
+	req := n.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.BnsFetchFileZoneResponse2
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -297,15 +305,16 @@ func (n *NamesController) GetHistoricalZoneFile(
 	zoneFileHash string) (
 	models.ApiResponse[models.BnsFetchHistoricalZoneFileResponse2],
 	error) {
+	path := fmt.Sprintf("/v1/names/%v/zonefile/%v", name, zoneFileHash)
 	req := n.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/names/%v/zonefile/%v", name, zoneFileHash),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.BnsFetchHistoricalZoneFileResponse2
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -338,15 +347,16 @@ func (n *NamesController) GetNamesOwnedByAddress(
 	address string) (
 	models.ApiResponse[models.BnsNamesOwnByAddressResponse],
 	error) {
+	path := fmt.Sprintf("/v1/addresses/%v/%v", blockchain, address)
 	req := n.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/addresses/%v/%v", blockchain, address),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.BnsNamesOwnByAddressResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := n.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

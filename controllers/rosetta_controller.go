@@ -29,10 +29,11 @@ func NewRosettaController(baseController baseController) *RosettaController {
 func (r *RosettaController) RosettaNetworkList(ctx context.Context) (
 	models.ApiResponse[models.RosettaNetworkListResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/network/list")
+	path := "/rosetta/v1/network/list"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	var result models.RosettaNetworkListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -63,12 +64,13 @@ func (r *RosettaController) RosettaNetworkOptions(
 	body *models.RosettaOptionsRequest) (
 	models.ApiResponse[models.RosettaNetworkOptionsResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/network/options")
+	path := "/rosetta/v1/network/options"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaNetworkOptionsResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -98,12 +100,13 @@ func (r *RosettaController) RosettaNetworkStatus(
 	body *models.RosettaStatusRequest) (
 	models.ApiResponse[models.RosettaNetworkStatusResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/network/status")
+	path := "/rosetta/v1/network/status"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaNetworkStatusResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -133,12 +136,13 @@ func (r *RosettaController) RosettaAccountBalance(
 	body *models.RosettaAccountBalanceRequest) (
 	models.ApiResponse[models.RosettaAccountBalanceResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/account/balance")
+	path := "/rosetta/v1/account/balance"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaAccountBalanceResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -167,12 +171,13 @@ func (r *RosettaController) RosettaBlock(
 	body *models.RosettaBlockRequest) (
 	models.ApiResponse[models.RosettaBlockResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/block")
+	path := "/rosetta/v1/block"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaBlockResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -201,12 +206,13 @@ func (r *RosettaController) RosettaBlockTransaction(
 	body *models.RosettaBlockTransactionRequest) (
 	models.ApiResponse[models.RosettaBlockTransactionResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/block/transaction")
+	path := "/rosetta/v1/block/transaction"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaBlockTransactionResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -235,12 +241,13 @@ func (r *RosettaController) RosettaMempool(
 	body *models.RosettaMempoolRequest) (
 	models.ApiResponse[models.RosettaMempoolResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/mempool")
+	path := "/rosetta/v1/mempool"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaMempoolResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -269,12 +276,13 @@ func (r *RosettaController) RosettaMempoolTransaction(
 	body *models.RosettaMempoolTransactionRequest) (
 	models.ApiResponse[models.RosettaMempoolTransactionResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/mempool/transaction")
+	path := "/rosetta/v1/mempool/transaction"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaMempoolTransactionResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -303,12 +311,13 @@ func (r *RosettaController) RosettaConstructionDerive(
 	body *models.RosettaConstructionDeriveRequest) (
 	models.ApiResponse[models.RosettaConstructionDeriveResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/derive")
+	path := "/rosetta/v1/construction/derive"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionDeriveResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -337,12 +346,13 @@ func (r *RosettaController) RosettaConstructionHash(
 	body *models.RosettaConstructionHashRequest) (
 	models.ApiResponse[models.RosettaConstructionHashResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/hash")
+	path := "/rosetta/v1/construction/hash"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionHashResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -371,12 +381,13 @@ func (r *RosettaController) RosettaConstructionMetadata(
 	body *models.RosettaConstructionMetadataRequest) (
 	models.ApiResponse[models.RosettaConstructionMetadataResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/metadata")
+	path := "/rosetta/v1/construction/metadata"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionMetadataResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -405,12 +416,13 @@ func (r *RosettaController) RosettaConstructionParse(
 	body *models.RosettaConstructionParseRequest) (
 	models.ApiResponse[models.RosettaConstructionParseResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/parse")
+	path := "/rosetta/v1/construction/parse"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionParseResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -439,12 +451,13 @@ func (r *RosettaController) RosettaConstructionPreprocess(
 	body *models.RosettaConstructionPreprocessRequest) (
 	models.ApiResponse[models.RosettaConstructionPreprocessResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/preprocess")
+	path := "/rosetta/v1/construction/preprocess"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionPreprocessResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -473,12 +486,13 @@ func (r *RosettaController) RosettaConstructionSubmit(
 	body *models.RosettaConstructionSubmitRequest) (
 	models.ApiResponse[models.RosettaConstructionSubmitResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/submit")
+	path := "/rosetta/v1/construction/submit"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionSubmitResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -507,12 +521,13 @@ func (r *RosettaController) RosettaConstructionPayloads(
 	body *models.RosettaConstructionPayloadsRequest) (
 	models.ApiResponse[models.RosettaConstructionPayloadResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/payloads")
+	path := "/rosetta/v1/construction/payloads"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionPayloadResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -541,12 +556,13 @@ func (r *RosettaController) RosettaConstructionCombine(
 	body *models.RosettaConstructionCombineRequest) (
 	models.ApiResponse[models.RosettaConstructionCombineResponse],
 	error) {
-	req := r.prepareRequest(ctx, "POST", "/rosetta/v1/construction/combine")
+	path := "/rosetta/v1/construction/combine"
+	req := r.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.Json(body)
 	var result models.RosettaConstructionCombineResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := r.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

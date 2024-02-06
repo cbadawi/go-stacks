@@ -54,11 +54,11 @@ func NewLogger(out io.Writer, minLevel Level) *Logger {
 }
 
 // TryPrintInfo is a helper that will PrintInfo depending on verbose flag
-func (l *Logger) TryLog(verbose bool, message string, properties map[string]string) {
+func (l *Logger) TryLog(verbose bool, message string, properties map[string]string, level Level) {
 	if verbose == false {
 		return
 	}
-	l.print(LevelInfo, message, properties)
+	l.print(level, message, properties)
 }
 
 // PrintInfo is a helper that writes Info level log entries.

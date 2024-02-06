@@ -33,14 +33,15 @@ func (s *SearchController) SearchById(
 	includeMetadata *bool) (
 	models.ApiResponse[models.SearchResult],
 	error) {
-	req := s.prepareRequest(ctx, "GET", fmt.Sprintf("/extended/v1/search/%v", id))
+	path := fmt.Sprintf("/extended/v1/search/%v", id)
+	req := s.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if includeMetadata != nil {
 		req.QueryParam("include_metadata", *includeMetadata)
 	}
 
 	var result models.SearchResult
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

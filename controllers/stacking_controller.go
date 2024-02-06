@@ -34,10 +34,11 @@ func (s *StackingController) GetPoolDelegations(
 	offset *int) (
 	models.ApiResponse[models.PoolDelegationsResponse],
 	error) {
+	path := fmt.Sprintf("/extended/beta/stacking/%v/delegations", poolPrincipal)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/beta/stacking/%v/delegations", poolPrincipal),
+		path,
 	)
 	req.Authenticate(true)
 	if afterBlock != nil {
@@ -54,7 +55,7 @@ func (s *StackingController) GetPoolDelegations(
 	}
 
 	var result models.PoolDelegationsResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := s.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

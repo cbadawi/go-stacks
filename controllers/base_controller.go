@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/apimatic/go-core-runtime/https"
@@ -39,4 +42,67 @@ func NewBaseController(cbl CallBuilderLogger) *baseController {
 // It takes an http.Response object as a parameter and returns an error, if any.
 func validateResponse(response http.Response) error {
 	return nil
+}
+
+type JsonCaller func() (*json.Decoder, *http.Response, error)
+
+func (jc JsonCaller) Call() (any, *http.Response, error) {
+	decoder, resp, err := jc()
+	if err != nil {
+		return nil, resp, err
+	}
+	return decoder, resp, err
+}
+
+// Implement the interface for the other function signature (string, *http.Response, error)
+type StringCaller func() (string, *http.Response, error)
+
+func (sc StringCaller) Call() (any, *http.Response, error) {
+	str, resp, err := sc()
+	if err != nil {
+		return nil, resp, err
+	}
+	return str, resp, err
+}
+
+type CallFunc interface {
+	Call() (any, *http.Response, error)
+}
+
+func (bc baseController) logCall(req https.CallBuilder, path string, reqType string) (interface{}, *http.Response, error) {
+	bc.logger.TryLog(true, "API Call", map[string]string{"path": path}, logger.LevelInfo)
+	var result any
+	var resp *http.Response
+	var err error
+	switch reqType {
+	case "json":
+		result, resp, err = req.CallAsJson()
+	case "text":
+		result, resp, err = req.CallAsText()
+	default:
+		bc.logger.PrintError(errors.New("Unhandled call type"), nil)
+	}
+	if err != nil {
+		bc.logger.TryLog(true, "API Call Error", map[string]string{"error": fmt.Sprint(err)}, logger.LevelError)
+		return result, resp, err
+	}
+
+	bc.logger.TryLog(true, "API Call Response", map[string]string{"code": fmt.Sprint(resp.StatusCode), "status": resp.Status}, logger.LevelInfo)
+	return result, resp, err
+}
+
+func (bc baseController) LogCallAsJSON(req https.CallBuilder, path string) (*json.Decoder, *http.Response, error) {
+	result, resp, err := bc.logCall(req, path, "json")
+	if decoder, ok := result.(*json.Decoder); ok {
+		return decoder, resp, err
+	} else {
+		err = errors.New(fmt.Sprintf("Expected json.Decoder type: %T", result))
+		bc.logger.PrintError(err, map[string]string{"result": fmt.Sprint(result)})
+		return nil, resp, err
+	}
+}
+
+func (bc baseController) LogCallAsText(req https.CallBuilder, path string) (string, *http.Response, error) {
+	result, resp, err := bc.logCall(req, path, "text")
+	return result.(string), resp, err
 }

@@ -28,10 +28,11 @@ func NewInfoController(baseController baseController) *InfoController {
 func (i *InfoController) GetCoreApiInfo(ctx context.Context) (
 	models.ApiResponse[models.CoreNodeInfoResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/v2/info")
+	path := "/v2/info"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.CoreNodeInfoResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -55,10 +56,11 @@ func (i *InfoController) GetCoreApiInfo(ctx context.Context) (
 func (i *InfoController) GetStatus(ctx context.Context) (
 	models.ApiResponse[models.ServerStatusResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/status")
+	path := "/extended/v1/status"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.ServerStatusResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -82,10 +84,11 @@ func (i *InfoController) GetStatus(ctx context.Context) (
 func (i *InfoController) GetNetworkBlockTimes(ctx context.Context) (
 	models.ApiResponse[models.NetworkBlockTimesResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/info/network_block_times")
+	path := "/extended/v1/info/network_block_times"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.NetworkBlockTimesResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -111,15 +114,16 @@ func (i *InfoController) GetNetworkBlockTimeByNetwork(
 	network models.NetworkEnum) (
 	models.ApiResponse[models.TargetBlockTime],
 	error) {
+	path := fmt.Sprintf("/extended/v1/info/network_block_time/%v", network)
 	req := i.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/info/network_block_time/%v", network),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.TargetBlockTime
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -146,13 +150,14 @@ func (i *InfoController) GetStxSupply(
 	height *float64) (
 	models.ApiResponse[models.GetStxSupplyResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/stx_supply")
+	path := "/extended/v1/stx_supply"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if height != nil {
 		req.QueryParam("height", *height)
 	}
 	var result models.GetStxSupplyResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -177,9 +182,10 @@ func (i *InfoController) GetStxSupply(
 func (i *InfoController) GetStxSupplyTotalSupplyPlain(ctx context.Context) (
 	models.ApiResponse[string],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/stx_supply/total/plain")
+	path := "/extended/v1/stx_supply/total/plain"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
-	str, resp, err := req.CallAsText()
+	str, resp, err := i.LogCallAsText(req, path)
 	var result string = str
 
 	if err != nil {
@@ -199,9 +205,10 @@ func (i *InfoController) GetStxSupplyTotalSupplyPlain(ctx context.Context) (
 func (i *InfoController) GetStxSupplyCirculatingPlain(ctx context.Context) (
 	models.ApiResponse[string],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/stx_supply/circulating/plain")
+	path := "/extended/v1/stx_supply/circulating/plain"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
-	str, resp, err := req.CallAsText()
+	str, resp, err := i.LogCallAsText(req, path)
 	var result string = str
 
 	if err != nil {
@@ -224,13 +231,14 @@ func (i *InfoController) GetTotalStxSupplyLegacyFormat(
 	height *float64) (
 	models.ApiResponse[models.GetStxSupplyLegacyFormatResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/extended/v1/stx_supply/legacy_format")
+	path := "/extended/v1/stx_supply/legacy_format"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if height != nil {
 		req.QueryParam("height", *height)
 	}
 	var result models.GetStxSupplyLegacyFormatResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -254,10 +262,11 @@ func (i *InfoController) GetTotalStxSupplyLegacyFormat(
 func (i *InfoController) GetPoxInfo(ctx context.Context) (
 	models.ApiResponse[models.CoreNodePoxResponse],
 	error) {
-	req := i.prepareRequest(ctx, "GET", "/v2/pox")
+	path := "/v2/pox"
+	req := i.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.CoreNodePoxResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := i.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

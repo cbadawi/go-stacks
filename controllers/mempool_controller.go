@@ -27,10 +27,11 @@ func NewMempoolController(baseController baseController) *MempoolController {
 func (m *MempoolController) GetMempoolFeePriorities(ctx context.Context) (
 	models.ApiResponse[models.MempoolFeePriorities],
 	error) {
-	req := m.prepareRequest(ctx, "GET", "/extended/v2/mempool/fees")
+	path := "/extended/v2/mempool/fees"
+	req := m.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.MempoolFeePriorities
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := m.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

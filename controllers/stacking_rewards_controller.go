@@ -31,7 +31,8 @@ func (s *StackingRewardsController) GetBurnchainRewardSlotHolders(
 	offset *int) (
 	models.ApiResponse[models.BurnchainRewardSlotHolderListResponse],
 	error) {
-	req := s.prepareRequest(ctx, "GET", "/extended/v1/burnchain/reward_slot_holders")
+	path := "/extended/v1/burnchain/reward_slot_holders"
+	req := s.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -68,10 +69,11 @@ func (s *StackingRewardsController) GetBurnchainRewardSlotHoldersByAddress(
 	offset *int) (
 	models.ApiResponse[models.BurnchainRewardSlotHolderListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/burnchain/reward_slot_holders/%v", address)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/burnchain/reward_slot_holders/%v", address),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -109,7 +111,8 @@ func (s *StackingRewardsController) GetBurnchainRewardList(
 	offset *int) (
 	models.ApiResponse[models.BurnchainRewardListResponse],
 	error) {
-	req := s.prepareRequest(ctx, "GET", "/extended/v1/burnchain/rewards")
+	path := "/extended/v1/burnchain/rewards"
+	req := s.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -146,10 +149,11 @@ func (s *StackingRewardsController) GetBurnchainRewardListByAddress(
 	offset *int) (
 	models.ApiResponse[models.BurnchainRewardListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v1/burnchain/rewards/%v", address)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/burnchain/rewards/%v", address),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -186,10 +190,11 @@ func (s *StackingRewardsController) GetBurnchainRewardsTotalByAddress(
 	address string) (
 	models.ApiResponse[models.BurnchainRewardsTotal],
 	error) {
+	path := fmt.Sprintf("/extended/v1/burnchain/rewards/%v/total", address)
 	req := s.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/burnchain/rewards/%v/total", address),
+		path,
 	)
 	req.Authenticate(true)
 

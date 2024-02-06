@@ -27,9 +27,10 @@ func NewFeesController(baseController baseController) *FeesController {
 func (f *FeesController) GetFeeTransfer(ctx context.Context) (
 	models.ApiResponse[string],
 	error) {
-	req := f.prepareRequest(ctx, "GET", "/v2/fees/transfer")
+	path := "/v2/fees/transfer"
+	req := f.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
-	str, resp, err := req.CallAsText()
+	str, resp, err := f.LogCallAsText(req, path)
 	var result string = str
 
 	if err != nil {

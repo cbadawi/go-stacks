@@ -34,7 +34,8 @@ func (m *MicroblocksController) GetMicroblockList(
 	offset *int) (
 	models.ApiResponse[models.MicroblockListResponse],
 	error) {
-	req := m.prepareRequest(ctx, "GET", "/extended/v1/microblock")
+	path := "/extended/v1/microblock"
+	req := m.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -43,7 +44,7 @@ func (m *MicroblocksController) GetMicroblockList(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.MicroblockListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := m.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -69,15 +70,16 @@ func (m *MicroblocksController) GetMicroblockByHash(
 	hash string) (
 	models.ApiResponse[models.Microblock],
 	error) {
+	path := fmt.Sprintf("/extended/v1/microblock/%v", hash)
 	req := m.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/microblock/%v", hash),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.Microblock
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := m.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -104,10 +106,11 @@ func (m *MicroblocksController) GetMicroblockByHash(
 func (m *MicroblocksController) GetUnanchoredTxs(ctx context.Context) (
 	models.ApiResponse[models.UnanchoredTransactionListResponse],
 	error) {
-	req := m.prepareRequest(ctx, "GET", "/extended/v1/microblock/unanchored/txs")
+	path := "/extended/v1/microblock/unanchored/txs"
+	req := m.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.UnanchoredTransactionListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := m.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

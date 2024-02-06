@@ -40,14 +40,15 @@ func (f *FaucetsController) RunFaucetStx(
 	stacking *bool) (
 	models.ApiResponse[models.RunFaucetResponse],
 	error) {
-	req := f.prepareRequest(ctx, "POST", "/extended/v1/faucets/stx")
+	path := "/extended/v1/faucets/stx"
+	req := f.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.QueryParam("address", address)
 	if stacking != nil {
 		req.QueryParam("stacking", *stacking)
 	}
 	var result models.RunFaucetResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := f.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -80,7 +81,8 @@ func (f *FaucetsController) RunFaucetBtc(
 	body *models.ExtendedV1FaucetsBtcRequest) (
 	models.ApiResponse[models.RunFaucetResponse],
 	error) {
-	req := f.prepareRequest(ctx, "POST", "/extended/v1/faucets/btc")
+	path := "/extended/v1/faucets/btc"
+	req := f.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/json")
 	req.QueryParam("address", address)
@@ -88,7 +90,7 @@ func (f *FaucetsController) RunFaucetBtc(
 		req.Json(*body)
 	}
 	var result models.RunFaucetResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := f.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

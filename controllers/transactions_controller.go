@@ -39,7 +39,8 @@ func (t *TransactionsController) GetTransactionList(
 	unanchored *bool) (
 	models.ApiResponse[models.TransactionResults],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx")
+	path := "/extended/v1/tx"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -54,7 +55,7 @@ func (t *TransactionsController) GetTransactionList(
 		req.QueryParam("unanchored", *unanchored)
 	}
 	var result models.TransactionResults
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -88,7 +89,8 @@ func (t *TransactionsController) GetMempoolTransactionList(
 	unanchored *bool) (
 	models.ApiResponse[models.MempoolTransactionListResponse],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx/mempool")
+	path := "/extended/v1/tx/mempool"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if senderAddress != nil {
 		req.QueryParam("sender_address", *senderAddress)
@@ -115,7 +117,7 @@ func (t *TransactionsController) GetMempoolTransactionList(
 		req.QueryParam("unanchored", *unanchored)
 	}
 	var result models.MempoolTransactionListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -146,7 +148,8 @@ func (t *TransactionsController) GetDroppedMempoolTransactionList(
 	offset *int) (
 	models.ApiResponse[models.MempoolTransactionListResponse],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx/mempool/dropped")
+	path := "/extended/v1/tx/mempool/dropped"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -155,7 +158,7 @@ func (t *TransactionsController) GetDroppedMempoolTransactionList(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.MempoolTransactionListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -180,10 +183,11 @@ func (t *TransactionsController) GetDroppedMempoolTransactionList(
 func (t *TransactionsController) GetMempoolTransactionStats(ctx context.Context) (
 	models.ApiResponse[models.MempoolTransactionStatsResponse],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx/mempool/stats")
+	path := "/extended/v1/tx/mempool/stats"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	var result models.MempoolTransactionStatsResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -214,7 +218,8 @@ func (t *TransactionsController) GetTxListDetails(
 	unanchored *bool) (
 	models.ApiResponse[map[string]models.TransactionList],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx/multiple")
+	path := "/extended/v1/tx/multiple"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	req.QueryParam("tx_id", txId)
 	if eventOffset != nil {
@@ -227,7 +232,7 @@ func (t *TransactionsController) GetTxListDetails(
 		req.QueryParam("unanchored", *unanchored)
 	}
 	var result map[string]models.TransactionList
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -260,7 +265,8 @@ func (t *TransactionsController) GetTransactionById(
 	unanchored *bool) (
 	models.ApiResponse[models.Transaction],
 	error) {
-	req := t.prepareRequest(ctx, "GET", fmt.Sprintf("/extended/v1/tx/%v", txId))
+	path := fmt.Sprintf("/extended/v1/tx/%v", txId)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if eventOffset != nil {
 		req.QueryParam("event_offset", *eventOffset)
@@ -273,7 +279,7 @@ func (t *TransactionsController) GetTransactionById(
 	}
 
 	var result models.Transaction
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -302,11 +308,12 @@ func (t *TransactionsController) GetRawTransactionById(
 	txId string) (
 	models.ApiResponse[models.GetRawTransactionResult],
 	error) {
-	req := t.prepareRequest(ctx, "GET", fmt.Sprintf("/extended/v1/tx/%v/raw", txId))
+	path := fmt.Sprintf("/extended/v1/tx/%v/raw", txId)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.GetRawTransactionResult
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -335,7 +342,8 @@ func (t *TransactionsController) PostCoreNodeTransactions(
 	body *models.FileWrapper) (
 	models.ApiResponse[string],
 	error) {
-	req := t.prepareRequest(ctx, "POST", "/v2/transactions")
+	path := "/v2/transactions"
+	req := t.prepareRequest(ctx, "POST", path)
 	req.Authenticate(true)
 	req.Header("Content-Type", "application/octet-stream")
 	formFields := []https.FormParam{}
@@ -344,7 +352,7 @@ func (t *TransactionsController) PostCoreNodeTransactions(
 		formFields = append(formFields, bodyParam)
 	}
 	req.FormData(formFields)
-	str, resp, err := req.CallAsText()
+	str, resp, err := t.LogCallAsText(req, path)
 	var result string = str
 
 	if err != nil {
@@ -369,15 +377,12 @@ func (t *TransactionsController) GetTransactionsByBlock(
 	heightOrHash interface{}) (
 	models.ApiResponse[models.TransactionResults],
 	error) {
-	req := t.prepareRequest(
-		ctx,
-		"GET",
-		fmt.Sprintf("/extended/v2/blocks/%v/transactions", heightOrHash),
-	)
+	path := fmt.Sprintf("/extended/v2/blocks/%v/transactions", heightOrHash)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.TransactionResults
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -407,11 +412,8 @@ func (t *TransactionsController) GetTransactionsByBlockHash(
 	offset *int) (
 	models.ApiResponse[models.TransactionResults],
 	error) {
-	req := t.prepareRequest(
-		ctx,
-		"GET",
-		fmt.Sprintf("/extended/v1/tx/block/%v", blockHash),
-	)
+	path := fmt.Sprintf("/extended/v1/tx/block/%v", blockHash)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -421,7 +423,7 @@ func (t *TransactionsController) GetTransactionsByBlockHash(
 	}
 
 	var result models.TransactionResults
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -452,11 +454,8 @@ func (t *TransactionsController) GetTransactionsByBlockHeight(
 	unanchored *bool) (
 	models.ApiResponse[models.TransactionResults],
 	error) {
-	req := t.prepareRequest(
-		ctx,
-		"GET",
-		fmt.Sprintf("/extended/v1/tx/block_height/%v", height),
-	)
+	path := fmt.Sprintf("/extended/v1/tx/block_height/%v", height)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -469,7 +468,7 @@ func (t *TransactionsController) GetTransactionsByBlockHeight(
 	}
 
 	var result models.TransactionResults
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -498,11 +497,8 @@ func (t *TransactionsController) GetAddressMempoolTransactions(
 	unanchored *bool) (
 	models.ApiResponse[models.MempoolTransactionListResponse],
 	error) {
-	req := t.prepareRequest(
-		ctx,
-		"GET",
-		fmt.Sprintf("/extended/v1/address/%v/mempool", address),
-	)
+	path := fmt.Sprintf("/extended/v1/address/%v/mempool", address)
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -515,7 +511,7 @@ func (t *TransactionsController) GetAddressMempoolTransactions(
 	}
 
 	var result models.MempoolTransactionListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -545,7 +541,8 @@ func (t *TransactionsController) GetFilteredEvents(
 	mType []models.Type2Enum) (
 	models.ApiResponse[models.TransactionEventsResponse],
 	error) {
-	req := t.prepareRequest(ctx, "GET", "/extended/v1/tx/events")
+	path := "/extended/v1/tx/events"
+	req := t.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if txId != nil {
 		req.QueryParam("tx_id", *txId)
@@ -563,7 +560,7 @@ func (t *TransactionsController) GetFilteredEvents(
 		req.QueryParam("type", mType)
 	}
 	var result models.TransactionEventsResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := t.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

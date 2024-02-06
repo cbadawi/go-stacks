@@ -31,7 +31,8 @@ func (b *BurnBlocksController) GetBurnBlocks(
 	offset *int) (
 	models.ApiResponse[models.BurnBlockListResponse],
 	error) {
-	req := b.prepareRequest(ctx, "GET", "/extended/v2/burn-blocks")
+	path := "/extended/v2/burn-blocks"
+	req := b.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -40,7 +41,7 @@ func (b *BurnBlocksController) GetBurnBlocks(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.BurnBlockListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -66,15 +67,12 @@ func (b *BurnBlocksController) GetBurnBlock(
 	heightOrHash interface{}) (
 	models.ApiResponse[models.BurnBlock],
 	error) {
-	req := b.prepareRequest(
-		ctx,
-		"GET",
-		fmt.Sprintf("/extended/v2/burn-blocks/%v", heightOrHash),
-	)
+	path := fmt.Sprintf("/extended/v2/burn-blocks/%v", heightOrHash)
+	req := b.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.BurnBlock
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}

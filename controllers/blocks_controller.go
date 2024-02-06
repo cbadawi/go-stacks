@@ -34,10 +34,11 @@ func (b *BlocksController) GetBlocksByBurnBlock(
 	offset *int) (
 	models.ApiResponse[models.NakamotoBlockListResponse],
 	error) {
+	path := fmt.Sprintf("/extended/v2/burn-blocks/%v/blocks", heightOrHash)
 	req := b.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v2/burn-blocks/%v/blocks", heightOrHash),
+		path,
 	)
 	req.Authenticate(true)
 	if limit != nil {
@@ -48,7 +49,7 @@ func (b *BlocksController) GetBlocksByBurnBlock(
 	}
 
 	var result models.NakamotoBlockListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -75,7 +76,8 @@ func (b *BlocksController) GetBlocks(
 	offset *int) (
 	models.ApiResponse[models.NakamotoBlockListResponse],
 	error) {
-	req := b.prepareRequest(ctx, "GET", "/extended/v2/blocks")
+	path := "/extended/v2/blocks"
+	req := b.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -84,7 +86,7 @@ func (b *BlocksController) GetBlocks(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.NakamotoBlockListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -110,15 +112,16 @@ func (b *BlocksController) GetBlock(
 	heightOrHash interface{}) (
 	models.ApiResponse[models.NakamotoBlock],
 	error) {
+	path := fmt.Sprintf("/extended/v2/blocks/%v", heightOrHash)
 	req := b.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v2/blocks/%v", heightOrHash),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.NakamotoBlock
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -148,7 +151,8 @@ func (b *BlocksController) GetBlockList(
 	offset *int) (
 	models.ApiResponse[models.BlockListResponse],
 	error) {
-	req := b.prepareRequest(ctx, "GET", "/extended/v1/block")
+	path := "/extended/v1/block"
+	req := b.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 	if limit != nil {
 		req.QueryParam("limit", *limit)
@@ -157,7 +161,7 @@ func (b *BlocksController) GetBlockList(
 		req.QueryParam("offset", *offset)
 	}
 	var result models.BlockListResponse
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -185,11 +189,12 @@ func (b *BlocksController) GetBlockByHash(
 	hash string) (
 	models.ApiResponse[models.Block],
 	error) {
-	req := b.prepareRequest(ctx, "GET", fmt.Sprintf("/extended/v1/block/%v", hash))
+	path := fmt.Sprintf("/extended/v1/block/%v", hash)
+	req := b.prepareRequest(ctx, "GET", path)
 	req.Authenticate(true)
 
 	var result models.Block
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -220,15 +225,16 @@ func (b *BlocksController) GetBlockByHeight(
 	height float64) (
 	models.ApiResponse[models.Block],
 	error) {
+	path := fmt.Sprintf("/extended/v1/block/by_height/%v", height)
 	req := b.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/block/by_height/%v", height),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.Block
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -259,15 +265,16 @@ func (b *BlocksController) GetBlockByBurnBlockHash(
 	burnBlockHash string) (
 	models.ApiResponse[models.Block],
 	error) {
+	path := fmt.Sprintf("/extended/v1/block/by_burn_block_hash/%v", burnBlockHash)
 	req := b.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/block/by_burn_block_hash/%v", burnBlockHash),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.Block
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
@@ -298,15 +305,16 @@ func (b *BlocksController) GetBlockByBurnBlockHeight(
 	burnBlockHeight float64) (
 	models.ApiResponse[models.Block],
 	error) {
+	path := fmt.Sprintf("/extended/v1/block/by_burn_block_height/%v", burnBlockHeight)
 	req := b.prepareRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/extended/v1/block/by_burn_block_height/%v", burnBlockHeight),
+		path,
 	)
 	req.Authenticate(true)
 
 	var result models.Block
-	decoder, resp, err := req.CallAsJson()
+	decoder, resp, err := b.LogCallAsJSON(req, path)
 	if err != nil {
 		return models.NewApiResponse(result, resp), err
 	}
