@@ -68,12 +68,9 @@ func NewClient(configuration Configuration) ClientInterface {
 	}
 
 	client.callBuilderFactory = callBuilderHandler(
-		func(server string) string {
-			if server == "" {
-				server = "default"
-			}
-			baseUri := getBaseUri(Server(server), client.config)
-			return baseUri
+		// need to keep this function signature to avoid forking the api matic dependancy
+		func(_ string) string {
+			return client.config.baseUri
 		},
 		nil,
 		https.NewHttpClient(configuration.HttpConfiguration()),
@@ -198,7 +195,7 @@ func getBaseUri(
 	configuration Configuration) string {
 	if configuration.Environment() == Environment(PRODUCTION) {
 		if server == Server(ENUMDEFAULT) {
-			return "https://api.mainnet.hiro.so/"
+			return ""
 		}
 	}
 	if configuration.Environment() == Environment(ENVIRONMENT2) {

@@ -37,9 +37,8 @@ func DefaultConfiguration() Configuration {
 	// severity level to the standard out stream.
 	loggerHandler := logger.NewLogger(os.Stdout, logger.LevelInfo)
 
-	// loggerHandler.TryLog(true, "trylogggggg", nil)
-
 	return newConfiguration(
+		WithBaseUri(MAINNET_URI),
 		WithEnvironment(PRODUCTION),
 		WithHttpConfiguration(DefaultHttpConfiguration()),
 		WithLogger(loggerHandler),

@@ -11,6 +11,7 @@ type ConfigurationOptions func(*Configuration)
 
 // Configuration holds configuration settings.
 type Configuration struct {
+	baseUri           string
 	environment       Environment
 	httpConfiguration HttpConfiguration
 	logger            *logger.Logger
@@ -30,6 +31,13 @@ func newConfiguration(options ...ConfigurationOptions) Configuration {
 func WithEnvironment(environment Environment) ConfigurationOptions {
 	return func(c *Configuration) {
 		c.environment = environment
+	}
+}
+
+// WithBaseUri is an option that sets the Base URI in the Configuration.
+func WithBaseUri(uri string) ConfigurationOptions {
+	return func(c *Configuration) {
+		c.baseUri = uri
 	}
 }
 
@@ -81,6 +89,11 @@ const (
 
 // Environment represents available environments.
 type Environment string
+
+const (
+	MAINNET_URI string = "https://api.mainnet.hiro.so/"
+	TESTNET_URI string = "https://api.testnet.hiro.so/"
+)
 
 const (
 	PRODUCTION   Environment = "production"

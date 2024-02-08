@@ -62,6 +62,11 @@ func (bc baseController) logCall(req https.CallBuilder, path string, reqType str
 		return result, resp, err
 	}
 
+	// if resp.StatusCode == 400 {
+	// 	err := errors.New(resp.Status)
+	// 	return result, resp, err
+	// }
+
 	bc.logger.TryLog(true, "API Call Response", map[string]string{"code": fmt.Sprint(resp.StatusCode), "status": resp.Status}, logger.LevelInfo)
 	return result, resp, err
 }
