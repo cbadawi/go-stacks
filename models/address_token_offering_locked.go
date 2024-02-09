@@ -34,6 +34,9 @@ func (a *AddressTokenOfferingLocked) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressTokenOfferingLocked.
 // It customizes the JSON unmarshaling process for AddressTokenOfferingLocked objects.
 func (a *AddressTokenOfferingLocked) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TotalLocked    string                  `json:"total_locked"`
 		TotalUnlocked  string                  `json:"total_unlocked"`

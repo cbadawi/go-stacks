@@ -35,6 +35,9 @@ func (r *RosettaConstructionPreprocessResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionPreprocessResponse.
 // It customizes the JSON unmarshaling process for RosettaConstructionPreprocessResponse objects.
 func (r *RosettaConstructionPreprocessResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Options            *RosettaOptions  `json:"options,omitempty"`
 		RequiredPublicKeys []RosettaAccount `json:"required_public_keys,omitempty"`

@@ -36,6 +36,9 @@ func (r *RosettaAmount) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaAmount.
 // It customizes the JSON unmarshaling process for RosettaAmount objects.
 func (r *RosettaAmount) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Value    string          `json:"value"`
 		Currency RosettaCurrency `json:"currency"`

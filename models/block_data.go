@@ -38,6 +38,9 @@ func (b *BlockData) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BlockData.
 // It customizes the JSON unmarshaling process for BlockData objects.
 func (b *BlockData) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Canonical       bool   `json:"canonical"`
 		Hash            string `json:"hash"`

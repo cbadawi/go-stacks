@@ -30,6 +30,9 @@ func (m *Metadata4) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Metadata4.
 // It customizes the JSON unmarshaling process for Metadata4 objects.
 func (m *Metadata4) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TransactionsRoot string `json:"transactions_root"`
 		Difficulty       string `json:"difficulty"`

@@ -29,6 +29,9 @@ func (r *RosettaNetworkListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaNetworkListResponse.
 // It customizes the JSON unmarshaling process for RosettaNetworkListResponse objects.
 func (r *RosettaNetworkListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NetworkIdentifiers []NetworkIdentifier `json:"network_identifiers"`
 	}{}

@@ -43,6 +43,9 @@ func (t *TxData3) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TxData3.
 // It customizes the JSON unmarshaling process for TxData3 objects.
 func (t *TxData3) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Canonical     bool    `json:"canonical"`
 		BlockHash     string  `json:"block_hash"`

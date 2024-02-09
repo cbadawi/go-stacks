@@ -27,6 +27,9 @@ func (t *TargetBlockTime) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TargetBlockTime.
 // It customizes the JSON unmarshaling process for TargetBlockTime objects.
 func (t *TargetBlockTime) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TargetBlockTime int `json:"target_block_time"`
 	}{}

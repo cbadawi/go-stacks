@@ -38,6 +38,9 @@ func (m *MempoolTransactionStatsResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for MempoolTransactionStatsResponse.
 // It customizes the JSON unmarshaling process for MempoolTransactionStatsResponse objects.
 func (m *MempoolTransactionStatsResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TxTypeCounts        TxTypeCounts        `json:"tx_type_counts"`
 		TxSimpleFeeAverages TxSimpleFeeAverages `json:"tx_simple_fee_averages"`

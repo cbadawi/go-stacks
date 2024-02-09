@@ -30,6 +30,9 @@ func (v *Value11) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Value11.
 // It customizes the JSON unmarshaling process for Value11 objects.
 func (v *Value11) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Hex  string `json:"hex"`
 		Repr string `json:"repr"`

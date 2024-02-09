@@ -36,6 +36,9 @@ func (s *SmartContract) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SmartContract.
 // It customizes the JSON unmarshaling process for SmartContract objects.
 func (s *SmartContract) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		ClarityVersion Optional[float64] `json:"clarity_version"`
 		ContractId     string            `json:"contract_id"`

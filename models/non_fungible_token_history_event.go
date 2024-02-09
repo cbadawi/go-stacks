@@ -51,6 +51,9 @@ func (n *NonFungibleTokenHistoryEvent) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NonFungibleTokenHistoryEvent.
 // It customizes the JSON unmarshaling process for NonFungibleTokenHistoryEvent objects.
 func (n *NonFungibleTokenHistoryEvent) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Sender         Optional[string] `json:"sender"`
 		Recipient      *string          `json:"recipient,omitempty"`

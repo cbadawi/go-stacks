@@ -31,6 +31,9 @@ func (s *StxLockEvent) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for StxLockEvent.
 // It customizes the JSON unmarshaling process for StxLockEvent objects.
 func (s *StxLockEvent) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		LockedAmount  string `json:"locked_amount"`
 		UnlockHeight  int    `json:"unlock_height"`

@@ -32,6 +32,9 @@ func (r *RosettaNetworkOptionsResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaNetworkOptionsResponse.
 // It customizes the JSON unmarshaling process for RosettaNetworkOptionsResponse objects.
 func (r *RosettaNetworkOptionsResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Version Version `json:"version"`
 		Allow   Allow   `json:"allow"`

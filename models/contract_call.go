@@ -39,6 +39,9 @@ func (c *ContractCall) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ContractCall.
 // It customizes the JSON unmarshaling process for ContractCall objects.
 func (c *ContractCall) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		ContractId        string        `json:"contract_id"`
 		FunctionName      string        `json:"function_name"`

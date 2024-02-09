@@ -30,6 +30,9 @@ func (b *BnsGetNamePriceResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BnsGetNamePriceResponse.
 // It customizes the JSON unmarshaling process for BnsGetNamePriceResponse objects.
 func (b *BnsGetNamePriceResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Units  string `json:"units"`
 		Amount string `json:"amount"`

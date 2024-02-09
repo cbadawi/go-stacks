@@ -40,6 +40,9 @@ func (m *MempoolFeePriorities) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for MempoolFeePriorities.
 // It customizes the JSON unmarshaling process for MempoolFeePriorities objects.
 func (m *MempoolFeePriorities) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		All           All             `json:"all"`
 		TokenTransfer *TokenTransfer1 `json:"token_transfer,omitempty"`

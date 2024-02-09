@@ -34,6 +34,9 @@ func (t *TxAges) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TxAges.
 // It customizes the JSON unmarshaling process for TxAges objects.
 func (t *TxAges) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TokenTransfer    TokenTransfer2    `json:"token_transfer"`
 		SmartContract    SmartContract2    `json:"smart_contract"`

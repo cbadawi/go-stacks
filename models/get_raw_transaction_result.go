@@ -29,6 +29,9 @@ func (g *GetRawTransactionResult) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for GetRawTransactionResult.
 // It customizes the JSON unmarshaling process for GetRawTransactionResult objects.
 func (g *GetRawTransactionResult) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		RawTx string `json:"raw_tx"`
 	}{}

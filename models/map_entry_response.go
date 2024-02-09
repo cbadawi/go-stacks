@@ -34,6 +34,9 @@ func (m *MapEntryResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for MapEntryResponse.
 // It customizes the JSON unmarshaling process for MapEntryResponse objects.
 func (m *MapEntryResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Data  string  `json:"data"`
 		Proof *string `json:"proof,omitempty"`

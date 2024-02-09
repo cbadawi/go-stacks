@@ -34,6 +34,9 @@ func (a *AddressAssetsListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressAssetsListResponse.
 // It customizes the JSON unmarshaling process for AddressAssetsListResponse objects.
 func (a *AddressAssetsListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Limit   int                `json:"limit"`
 		Offset  int                `json:"offset"`

@@ -33,6 +33,9 @@ func (f *FunctionArg) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for FunctionArg.
 // It customizes the JSON unmarshaling process for FunctionArg objects.
 func (f *FunctionArg) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Hex  string `json:"hex"`
 		Repr string `json:"repr"`

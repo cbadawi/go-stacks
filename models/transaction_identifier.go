@@ -29,6 +29,9 @@ func (t *TransactionIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TransactionIdentifier.
 // It customizes the JSON unmarshaling process for TransactionIdentifier objects.
 func (t *TransactionIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Hash string `json:"hash"`
 	}{}

@@ -34,6 +34,9 @@ func (s *SubNetworkIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SubNetworkIdentifier.
 // It customizes the JSON unmarshaling process for SubNetworkIdentifier objects.
 func (s *SubNetworkIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Network  string     `json:"network"`
 		Metadata *Metadata1 `json:"metadata,omitempty"`

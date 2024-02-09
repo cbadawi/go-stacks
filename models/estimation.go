@@ -33,6 +33,9 @@ func (e *Estimation) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Estimation.
 // It customizes the JSON unmarshaling process for Estimation objects.
 func (e *Estimation) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		FeeRate *float64 `json:"fee_rate,omitempty"`
 		Fee     *float64 `json:"fee,omitempty"`

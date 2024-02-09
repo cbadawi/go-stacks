@@ -35,6 +35,9 @@ func (e *EstimatedCost) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for EstimatedCost.
 // It customizes the JSON unmarshaling process for EstimatedCost objects.
 func (e *EstimatedCost) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		ReadCount   int `json:"read_count"`
 		ReadLength  int `json:"read_length"`

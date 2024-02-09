@@ -48,6 +48,9 @@ func (c *ChainTip) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ChainTip.
 // It customizes the JSON unmarshaling process for ChainTip objects.
 func (c *ChainTip) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		BlockHeight        int     `json:"block_height"`
 		BlockHash          string  `json:"block_hash"`

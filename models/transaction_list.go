@@ -33,6 +33,10 @@ func (t *TransactionList) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TransactionList.
 // It customizes the JSON unmarshaling process for TransactionList objects.
 func (t *TransactionList) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
+
 	temp := &struct {
 		Found  *bool    `json:"found,omitempty"`
 		Result *Result2 `json:"result,omitempty"`

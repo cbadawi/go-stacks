@@ -32,6 +32,9 @@ func (b *BurnchainRewardsTotal) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BurnchainRewardsTotal.
 // It customizes the JSON unmarshaling process for BurnchainRewardsTotal objects.
 func (b *BurnchainRewardsTotal) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		RewardRecipient string `json:"reward_recipient"`
 		RewardAmount    string `json:"reward_amount"`

@@ -51,6 +51,9 @@ func (s *ServerStatusResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ServerStatusResponse.
 // It customizes the JSON unmarshaling process for ServerStatusResponse objects.
 func (s *ServerStatusResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		ServerVersion     *string       `json:"server_version,omitempty"`
 		Status            string        `json:"status"`

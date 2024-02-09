@@ -32,6 +32,9 @@ func (r *RosettaMempoolTransactionRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaMempoolTransactionRequest.
 // It customizes the JSON unmarshaling process for RosettaMempoolTransactionRequest objects.
 func (r *RosettaMempoolTransactionRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NetworkIdentifier     NetworkIdentifier     `json:"network_identifier"`
 		TransactionIdentifier TransactionIdentifier `json:"transaction_identifier"`

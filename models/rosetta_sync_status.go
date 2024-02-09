@@ -44,6 +44,9 @@ func (r *RosettaSyncStatus) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaSyncStatus.
 // It customizes the JSON unmarshaling process for RosettaSyncStatus objects.
 func (r *RosettaSyncStatus) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		CurrentIndex int     `json:"current_index"`
 		TargetIndex  *int    `json:"target_index,omitempty"`

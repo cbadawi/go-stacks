@@ -50,6 +50,9 @@ func (b *BnsGetNameInfoResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BnsGetNameInfoResponse.
 // It customizes the JSON unmarshaling process for BnsGetNameInfoResponse objects.
 func (b *BnsGetNameInfoResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Address      string  `json:"address"`
 		Blockchain   string  `json:"blockchain"`

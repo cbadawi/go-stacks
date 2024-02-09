@@ -34,6 +34,9 @@ func (r *RosettaRelatedOperation) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaRelatedOperation.
 // It customizes the JSON unmarshaling process for RosettaRelatedOperation objects.
 func (r *RosettaRelatedOperation) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Index        int  `json:"index"`
 		NetworkIndex *int `json:"network_index,omitempty"`

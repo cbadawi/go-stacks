@@ -30,6 +30,9 @@ func (n *NetworkBlockTimesResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NetworkBlockTimesResponse.
 // It customizes the JSON unmarshaling process for NetworkBlockTimesResponse objects.
 func (n *NetworkBlockTimesResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Mainnet TargetBlockTime `json:"mainnet"`
 		Testnet TargetBlockTime `json:"testnet"`

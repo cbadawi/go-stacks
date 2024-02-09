@@ -29,6 +29,9 @@ func (f *FeeRateRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for FeeRateRequest.
 // It customizes the JSON unmarshaling process for FeeRateRequest objects.
 func (f *FeeRateRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Transaction string `json:"transaction"`
 	}{}

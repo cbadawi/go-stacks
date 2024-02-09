@@ -56,6 +56,9 @@ func (a *AddressStxBalanceResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressStxBalanceResponse.
 // It customizes the JSON unmarshaling process for AddressStxBalanceResponse objects.
 func (a *AddressStxBalanceResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Balance                   string                      `json:"balance"`
 		TotalSent                 string                      `json:"total_sent"`

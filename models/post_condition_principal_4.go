@@ -32,6 +32,9 @@ func (p *PostConditionPrincipal4) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for PostConditionPrincipal4.
 // It customizes the JSON unmarshaling process for PostConditionPrincipal4 objects.
 func (p *PostConditionPrincipal4) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TypeId       string `json:"type_id"`
 		Address      string `json:"address"`

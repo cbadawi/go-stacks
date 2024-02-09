@@ -126,6 +126,9 @@ func (r *RosettaOptions) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaOptions.
 // It customizes the JSON unmarshaling process for RosettaOptions objects.
 func (r *RosettaOptions) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		SenderAddress                 *string  `json:"sender_address,omitempty"`
 		Type                          *string  `json:"type,omitempty"`

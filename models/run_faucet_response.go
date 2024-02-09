@@ -44,6 +44,9 @@ func (r *RunFaucetResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RunFaucetResponse.
 // It customizes the JSON unmarshaling process for RunFaucetResponse objects.
 func (r *RunFaucetResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Success bool    `json:"success"`
 		TxId    *string `json:"txId,omitempty"`

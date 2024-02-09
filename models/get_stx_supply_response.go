@@ -38,6 +38,9 @@ func (g *GetStxSupplyResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for GetStxSupplyResponse.
 // It customizes the JSON unmarshaling process for GetStxSupplyResponse objects.
 func (g *GetStxSupplyResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		UnlockedPercent string `json:"unlocked_percent"`
 		TotalStx        string `json:"total_stx"`

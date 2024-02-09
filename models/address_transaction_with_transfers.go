@@ -45,6 +45,9 @@ func (a *AddressTransactionWithTransfers) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressTransactionWithTransfers.
 // It customizes the JSON unmarshaling process for AddressTransactionWithTransfers objects.
 func (a *AddressTransactionWithTransfers) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Tx           Transaction   `json:"tx"`
 		StxSent      string        `json:"stx_sent"`

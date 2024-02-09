@@ -37,6 +37,9 @@ func (n *NetworkIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NetworkIdentifier.
 // It customizes the JSON unmarshaling process for NetworkIdentifier objects.
 func (n *NetworkIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Blockchain           string                `json:"blockchain"`
 		Network              string                `json:"network"`

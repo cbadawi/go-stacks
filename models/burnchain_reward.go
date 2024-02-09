@@ -47,6 +47,9 @@ func (b *BurnchainReward) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BurnchainReward.
 // It customizes the JSON unmarshaling process for BurnchainReward objects.
 func (b *BurnchainReward) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Canonical       bool   `json:"canonical"`
 		BurnBlockHash   string `json:"burn_block_hash"`

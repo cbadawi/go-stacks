@@ -33,6 +33,9 @@ func (r *RosettaConstructionHashResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionHashResponse.
 // It customizes the JSON unmarshaling process for RosettaConstructionHashResponse objects.
 func (r *RosettaConstructionHashResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TransactionIdentifier TransactionIdentifier `json:"transaction_identifier"`
 		Metadata              *interface{}          `json:"metadata,omitempty"`

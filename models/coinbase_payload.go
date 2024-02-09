@@ -38,6 +38,9 @@ func (c *CoinbasePayload) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for CoinbasePayload.
 // It customizes the JSON unmarshaling process for CoinbasePayload objects.
 func (c *CoinbasePayload) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Data         string           `json:"data"`
 		AltRecipient Optional[string] `json:"alt_recipient"`

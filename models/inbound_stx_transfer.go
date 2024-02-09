@@ -47,6 +47,9 @@ func (i *InboundStxTransfer) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for InboundStxTransfer.
 // It customizes the JSON unmarshaling process for InboundStxTransfer objects.
 func (i *InboundStxTransfer) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Sender       string           `json:"sender"`
 		Amount       string           `json:"amount"`

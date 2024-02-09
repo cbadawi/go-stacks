@@ -31,6 +31,9 @@ func (f *FtBalance) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for FtBalance.
 // It customizes the JSON unmarshaling process for FtBalance objects.
 func (f *FtBalance) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Balance       string `json:"balance"`
 		TotalSent     string `json:"total_sent"`

@@ -42,6 +42,9 @@ func (v *Version) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Version.
 // It customizes the JSON unmarshaling process for Version objects.
 func (v *Version) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		RosettaVersion    string       `json:"rosetta_version"`
 		NodeVersion       string       `json:"node_version"`

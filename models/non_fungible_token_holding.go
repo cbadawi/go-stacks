@@ -48,6 +48,9 @@ func (n *NonFungibleTokenHolding) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NonFungibleTokenHolding.
 // It customizes the JSON unmarshaling process for NonFungibleTokenHolding objects.
 func (n *NonFungibleTokenHolding) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		AssetIdentifier *string      `json:"asset_identifier,omitempty"`
 		Value           *Value18     `json:"value,omitempty"`

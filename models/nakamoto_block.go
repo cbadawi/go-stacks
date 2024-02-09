@@ -77,6 +77,9 @@ func (n *NakamotoBlock) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NakamotoBlock.
 // It customizes the JSON unmarshaling process for NakamotoBlock objects.
 func (n *NakamotoBlock) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Canonical                bool    `json:"canonical"`
 		Height                   int     `json:"height"`

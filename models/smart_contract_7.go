@@ -38,6 +38,9 @@ func (s *SmartContract7) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SmartContract7.
 // It customizes the JSON unmarshaling process for SmartContract7 objects.
 func (s *SmartContract7) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TxId        string `json:"tx_id"`
 		Canonical   bool   `json:"canonical"`

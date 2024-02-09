@@ -41,6 +41,9 @@ func (m *Metadata3) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Metadata3.
 // It customizes the JSON unmarshaling process for Metadata3 objects.
 func (m *Metadata3) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Memo     *string `json:"memo,omitempty"`
 		Size     *int    `json:"size,omitempty"`

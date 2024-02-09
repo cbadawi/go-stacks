@@ -28,6 +28,9 @@ func (b *BnsNamesOwnByAddressResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BnsNamesOwnByAddressResponse.
 // It customizes the JSON unmarshaling process for BnsNamesOwnByAddressResponse objects.
 func (b *BnsNamesOwnByAddressResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Names []string `json:"names"`
 	}{}

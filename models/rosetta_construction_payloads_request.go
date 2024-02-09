@@ -39,6 +39,9 @@ func (r *RosettaConstructionPayloadsRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionPayloadsRequest.
 // It customizes the JSON unmarshaling process for RosettaConstructionPayloadsRequest objects.
 func (r *RosettaConstructionPayloadsRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NetworkIdentifier NetworkIdentifier  `json:"network_identifier"`
 		Operations        []RosettaOperation `json:"operations"`

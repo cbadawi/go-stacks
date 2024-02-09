@@ -33,6 +33,9 @@ func (t *TokenTransfer2) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TokenTransfer2.
 // It customizes the JSON unmarshaling process for TokenTransfer2 objects.
 func (t *TokenTransfer2) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		P25 *float64 `json:"p25"`
 		P50 *float64 `json:"p50"`

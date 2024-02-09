@@ -48,6 +48,9 @@ func (r *RosettaNetworkStatusResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaNetworkStatusResponse.
 // It customizes the JSON unmarshaling process for RosettaNetworkStatusResponse objects.
 func (r *RosettaNetworkStatusResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		CurrentBlockIdentifier RosettaBlockIdentifier        `json:"current_block_identifier"`
 		CurrentBlockTimestamp  int                           `json:"current_block_timestamp"`

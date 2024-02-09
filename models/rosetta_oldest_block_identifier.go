@@ -32,6 +32,9 @@ func (r *RosettaOldestBlockIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaOldestBlockIdentifier.
 // It customizes the JSON unmarshaling process for RosettaOldestBlockIdentifier objects.
 func (r *RosettaOldestBlockIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Index int    `json:"index"`
 		Hash  string `json:"hash"`

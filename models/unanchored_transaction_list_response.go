@@ -31,6 +31,9 @@ func (u *UnanchoredTransactionListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for UnanchoredTransactionListResponse.
 // It customizes the JSON unmarshaling process for UnanchoredTransactionListResponse objects.
 func (u *UnanchoredTransactionListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Total   int           `json:"total"`
 		Results []Transaction `json:"results"`

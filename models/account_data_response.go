@@ -38,6 +38,10 @@ func (a *AccountDataResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AccountDataResponse.
 // It customizes the JSON unmarshaling process for AccountDataResponse objects.
 func (a *AccountDataResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
+
 	temp := &struct {
 		Balance      string `json:"balance"`
 		Locked       string `json:"locked"`

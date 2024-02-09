@@ -32,6 +32,9 @@ func (r *RosettaCoinChange) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaCoinChange.
 // It customizes the JSON unmarshaling process for RosettaCoinChange objects.
 func (r *RosettaCoinChange) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		CoinIdentifier CoinIdentifier `json:"coin_identifier"`
 		CoinAction     CoinActionEnum `json:"coin_action"`

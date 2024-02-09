@@ -48,6 +48,9 @@ func (n *NonFungibleTokenMint) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NonFungibleTokenMint.
 // It customizes the JSON unmarshaling process for NonFungibleTokenMint objects.
 func (n *NonFungibleTokenMint) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Recipient  *string      `json:"recipient,omitempty"`
 		EventIndex *int         `json:"event_index,omitempty"`

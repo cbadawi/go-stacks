@@ -36,6 +36,9 @@ func (r *RosettaPartialBlockIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaPartialBlockIdentifier.
 // It customizes the JSON unmarshaling process for RosettaPartialBlockIdentifier objects.
 func (r *RosettaPartialBlockIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Hash  *string `json:"hash,omitempty"`
 		Index *int    `json:"index,omitempty"`

@@ -32,6 +32,9 @@ func (r *RosettaConstructionMetadataResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionMetadataResponse.
 // It customizes the JSON unmarshaling process for RosettaConstructionMetadataResponse objects.
 func (r *RosettaConstructionMetadataResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Metadata     Metadata5       `json:"metadata"`
 		SuggestedFee []RosettaAmount `json:"suggested_fee,omitempty"`

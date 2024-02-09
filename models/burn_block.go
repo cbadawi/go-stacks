@@ -41,6 +41,9 @@ func (b *BurnBlock) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BurnBlock.
 // It customizes the JSON unmarshaling process for BurnBlock objects.
 func (b *BurnBlock) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		BurnBlockTime    float64  `json:"burn_block_time"`
 		BurnBlockTimeIso string   `json:"burn_block_time_iso"`

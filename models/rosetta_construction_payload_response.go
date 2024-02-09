@@ -32,6 +32,9 @@ func (r *RosettaConstructionPayloadResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionPayloadResponse.
 // It customizes the JSON unmarshaling process for RosettaConstructionPayloadResponse objects.
 func (r *RosettaConstructionPayloadResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		UnsignedTransaction string           `json:"unsigned_transaction"`
 		Payloads            []SigningPayload `json:"payloads"`

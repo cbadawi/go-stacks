@@ -30,6 +30,9 @@ func (e *ExtendedV1FaucetsBtcRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ExtendedV1FaucetsBtcRequest.
 // It customizes the JSON unmarshaling process for ExtendedV1FaucetsBtcRequest objects.
 func (e *ExtendedV1FaucetsBtcRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Address *string `json:"address,omitempty"`
 	}{}

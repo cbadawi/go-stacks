@@ -37,6 +37,9 @@ func (r *RosettaTransaction) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaTransaction.
 // It customizes the JSON unmarshaling process for RosettaTransaction objects.
 func (r *RosettaTransaction) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TransactionIdentifier TransactionIdentifier `json:"transaction_identifier"`
 		Operations            []RosettaOperation    `json:"operations"`

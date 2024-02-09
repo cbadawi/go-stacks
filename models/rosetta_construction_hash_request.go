@@ -32,6 +32,9 @@ func (r *RosettaConstructionHashRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaConstructionHashRequest.
 // It customizes the JSON unmarshaling process for RosettaConstructionHashRequest objects.
 func (r *RosettaConstructionHashRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NetworkIdentifier NetworkIdentifier `json:"network_identifier"`
 		SignedTransaction string            `json:"signed_transaction"`

@@ -28,6 +28,9 @@ func (b *BnsGetAllNamespacesResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BnsGetAllNamespacesResponse.
 // It customizes the JSON unmarshaling process for BnsGetAllNamespacesResponse objects.
 func (b *BnsGetAllNamespacesResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Namespaces []string `json:"namespaces"`
 	}{}

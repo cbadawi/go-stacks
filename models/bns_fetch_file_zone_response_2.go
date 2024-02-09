@@ -34,6 +34,9 @@ func (b *BnsFetchFileZoneResponse2) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BnsFetchFileZoneResponse2.
 // It customizes the JSON unmarshaling process for BnsFetchFileZoneResponse2 objects.
 func (b *BnsFetchFileZoneResponse2) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Zonefile *string `json:"zonefile,omitempty"`
 		Error    *string `json:"error,omitempty"`

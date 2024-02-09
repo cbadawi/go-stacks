@@ -33,6 +33,9 @@ func (s *SmartContract1) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SmartContract1.
 // It customizes the JSON unmarshaling process for SmartContract1 objects.
 func (s *SmartContract1) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NoPriority     int `json:"no_priority"`
 		LowPriority    int `json:"low_priority"`

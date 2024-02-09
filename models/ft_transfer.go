@@ -41,6 +41,9 @@ func (f *FtTransfer) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for FtTransfer.
 // It customizes the JSON unmarshaling process for FtTransfer objects.
 func (f *FtTransfer) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		AssetIdentifier string  `json:"asset_identifier"`
 		Amount          string  `json:"amount"`

@@ -31,6 +31,9 @@ func (a *AddressUnlockSchedule) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressUnlockSchedule.
 // It customizes the JSON unmarshaling process for AddressUnlockSchedule objects.
 func (a *AddressUnlockSchedule) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Amount      string  `json:"amount"`
 		BlockHeight float64 `json:"block_height"`

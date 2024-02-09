@@ -43,6 +43,9 @@ func (r *RosettaBlock) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaBlock.
 // It customizes the JSON unmarshaling process for RosettaBlock objects.
 func (r *RosettaBlock) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		BlockIdentifier       RosettaBlockIdentifier       `json:"block_identifier"`
 		ParentBlockIdentifier RosettaParentBlockIdentifier `json:"parent_block_identifier"`

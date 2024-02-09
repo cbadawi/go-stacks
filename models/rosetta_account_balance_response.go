@@ -42,6 +42,9 @@ func (r *RosettaAccountBalanceResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaAccountBalanceResponse.
 // It customizes the JSON unmarshaling process for RosettaAccountBalanceResponse objects.
 func (r *RosettaAccountBalanceResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		BlockIdentifier RosettaBlockIdentifier `json:"block_identifier"`
 		Balances        []RosettaAmount        `json:"balances"`

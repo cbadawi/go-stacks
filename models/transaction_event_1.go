@@ -37,6 +37,9 @@ func (t *TransactionEvent1) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TransactionEvent1.
 // It customizes the JSON unmarshaling process for TransactionEvent1 objects.
 func (t *TransactionEvent1) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		EventIndex   int                    `json:"event_index"`
 		EventType    string                 `json:"event_type"`

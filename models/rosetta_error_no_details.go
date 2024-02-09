@@ -35,6 +35,9 @@ func (r *RosettaErrorNoDetails) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaErrorNoDetails.
 // It customizes the JSON unmarshaling process for RosettaErrorNoDetails objects.
 func (r *RosettaErrorNoDetails) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Code      int    `json:"code"`
 		Message   string `json:"message"`

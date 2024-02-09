@@ -36,6 +36,9 @@ func (r *ReadOnlyFunctionSuccessResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ReadOnlyFunctionSuccessResponse.
 // It customizes the JSON unmarshaling process for ReadOnlyFunctionSuccessResponse objects.
 func (r *ReadOnlyFunctionSuccessResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Okay   bool    `json:"okay"`
 		Result *string `json:"result,omitempty"`

@@ -43,6 +43,9 @@ func (a *AddressNonces) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AddressNonces.
 // It customizes the JSON unmarshaling process for AddressNonces objects.
 func (a *AddressNonces) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		LastMempoolTxNonce    *int  `json:"last_mempool_tx_nonce"`
 		LastExecutedTxNonce   *int  `json:"last_executed_tx_nonce"`

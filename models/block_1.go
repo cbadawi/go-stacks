@@ -180,6 +180,9 @@ func (b *Block1) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Block1.
 // It customizes the JSON unmarshaling process for Block1 objects.
 func (b *Block1) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Canonical                bool                          `json:"canonical"`
 		Height                   int                           `json:"height"`

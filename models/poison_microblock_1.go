@@ -33,6 +33,9 @@ func (p *PoisonMicroblock1) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for PoisonMicroblock1.
 // It customizes the JSON unmarshaling process for PoisonMicroblock1 objects.
 func (p *PoisonMicroblock1) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		P25 *float64 `json:"p25"`
 		P50 *float64 `json:"p50"`

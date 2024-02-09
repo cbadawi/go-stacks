@@ -37,6 +37,9 @@ func (b *BlockListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BlockListResponse.
 // It customizes the JSON unmarshaling process for BlockListResponse objects.
 func (b *BlockListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Limit   int     `json:"limit"`
 		Offset  int     `json:"offset"`

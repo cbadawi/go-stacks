@@ -50,6 +50,9 @@ func (s *StxBalance) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for StxBalance.
 // It customizes the JSON unmarshaling process for StxBalance objects.
 func (s *StxBalance) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Balance                   string `json:"balance"`
 		TotalSent                 string `json:"total_sent"`

@@ -39,6 +39,9 @@ func (r *RosettaAccount) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaAccount.
 // It customizes the JSON unmarshaling process for RosettaAccount objects.
 func (r *RosettaAccount) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Address    string             `json:"address"`
 		SubAccount *RosettaSubAccount `json:"sub_account,omitempty"`

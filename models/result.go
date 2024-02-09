@@ -219,6 +219,9 @@ func (r *Result) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Result.
 // It customizes the JSON unmarshaling process for Result objects.
 func (r *Result) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TxId                     *string                        `json:"tx_id,omitempty"`
 		Nonce                    *int                           `json:"nonce,omitempty"`

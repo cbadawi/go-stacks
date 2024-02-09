@@ -40,6 +40,9 @@ func (s *SearchResult) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SearchResult.
 // It customizes the JSON unmarshaling process for SearchResult objects.
 func (s *SearchResult) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Found  *bool     `json:"found,omitempty"`
 		Result *Result11 `json:"result,omitempty"`

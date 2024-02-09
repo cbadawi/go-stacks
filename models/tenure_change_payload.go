@@ -52,6 +52,9 @@ func (t *TenureChangePayload) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TenureChangePayload.
 // It customizes the JSON unmarshaling process for TenureChangePayload objects.
 func (t *TenureChangePayload) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		TenureConsensusHash     string    `json:"tenure_consensus_hash"`
 		PrevTenureConsensusHash string    `json:"prev_tenure_consensus_hash"`

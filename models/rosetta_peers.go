@@ -34,6 +34,9 @@ func (r *RosettaPeers) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaPeers.
 // It customizes the JSON unmarshaling process for RosettaPeers objects.
 func (r *RosettaPeers) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		PeerId   string       `json:"peer_id"`
 		Metadata *interface{} `json:"metadata,omitempty"`

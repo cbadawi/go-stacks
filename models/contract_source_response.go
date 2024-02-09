@@ -32,6 +32,9 @@ func (c *ContractSourceResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for ContractSourceResponse.
 // It customizes the JSON unmarshaling process for ContractSourceResponse objects.
 func (c *ContractSourceResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Source        string `json:"source"`
 		PublishHeight int    `json:"publish_height"`

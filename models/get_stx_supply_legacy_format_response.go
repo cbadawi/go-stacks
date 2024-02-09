@@ -44,6 +44,9 @@ func (g *GetStxSupplyLegacyFormatResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for GetStxSupplyLegacyFormatResponse.
 // It customizes the JSON unmarshaling process for GetStxSupplyLegacyFormatResponse objects.
 func (g *GetStxSupplyLegacyFormatResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		UnlockedPercent         string `json:"unlockedPercent"`
 		TotalStacks             string `json:"totalStacks"`

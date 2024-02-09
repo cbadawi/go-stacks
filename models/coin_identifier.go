@@ -29,6 +29,9 @@ func (c *CoinIdentifier) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for CoinIdentifier.
 // It customizes the JSON unmarshaling process for CoinIdentifier objects.
 func (c *CoinIdentifier) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Identifier string `json:"identifier"`
 	}{}

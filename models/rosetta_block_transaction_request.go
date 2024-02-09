@@ -35,6 +35,9 @@ func (r *RosettaBlockTransactionRequest) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaBlockTransactionRequest.
 // It customizes the JSON unmarshaling process for RosettaBlockTransactionRequest objects.
 func (r *RosettaBlockTransactionRequest) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		NetworkIdentifier     NetworkIdentifier             `json:"network_identifier"`
 		BlockIdentifier       RosettaPartialBlockIdentifier `json:"block_identifier"`

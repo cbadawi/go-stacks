@@ -32,6 +32,9 @@ func (r *RosettaPublicKey) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaPublicKey.
 // It customizes the JSON unmarshaling process for RosettaPublicKey objects.
 func (r *RosettaPublicKey) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		HexBytes  string        `json:"hex_bytes"`
 		CurveType CurveTypeEnum `json:"curve_type"`

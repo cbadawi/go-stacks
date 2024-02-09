@@ -37,6 +37,9 @@ func (r *RosettaSignature) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaSignature.
 // It customizes the JSON unmarshaling process for RosettaSignature objects.
 func (r *RosettaSignature) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		SigningPayload SigningPayload    `json:"signing_payload"`
 		PublicKey      RosettaPublicKey  `json:"public_key"`

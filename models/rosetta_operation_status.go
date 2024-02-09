@@ -32,6 +32,9 @@ func (r *RosettaOperationStatus) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for RosettaOperationStatus.
 // It customizes the JSON unmarshaling process for RosettaOperationStatus objects.
 func (r *RosettaOperationStatus) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Status     string `json:"status"`
 		Successful bool   `json:"successful"`

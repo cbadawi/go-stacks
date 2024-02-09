@@ -37,6 +37,9 @@ func (b *BurnchainRewardSlotHolderListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BurnchainRewardSlotHolderListResponse.
 // It customizes the JSON unmarshaling process for BurnchainRewardSlotHolderListResponse objects.
 func (b *BurnchainRewardSlotHolderListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Limit   int                         `json:"limit"`
 		Offset  int                         `json:"offset"`

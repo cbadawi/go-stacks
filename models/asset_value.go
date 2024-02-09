@@ -29,6 +29,9 @@ func (a *AssetValue) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for AssetValue.
 // It customizes the JSON unmarshaling process for AssetValue objects.
 func (a *AssetValue) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Hex  string `json:"hex"`
 		Repr string `json:"repr"`

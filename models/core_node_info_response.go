@@ -65,6 +65,9 @@ func (c *CoreNodeInfoResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for CoreNodeInfoResponse.
 // It customizes the JSON unmarshaling process for CoreNodeInfoResponse objects.
 func (c *CoreNodeInfoResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		PeerVersion            int    `json:"peer_version"`
 		PoxConsensus           string `json:"pox_consensus"`

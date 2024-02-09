@@ -37,6 +37,9 @@ func (b *BurnBlockListResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for BurnBlockListResponse.
 // It customizes the JSON unmarshaling process for BurnBlockListResponse objects.
 func (b *BurnBlockListResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Limit   int         `json:"limit"`
 		Offset  int         `json:"offset"`

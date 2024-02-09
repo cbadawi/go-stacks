@@ -33,6 +33,9 @@ func (m *Metadata5) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Metadata5.
 // It customizes the JSON unmarshaling process for Metadata5 objects.
 func (m *Metadata5) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		AccountSequence *int    `json:"account_sequence,omitempty"`
 		RecentBlockHash *string `json:"recent_block_hash,omitempty"`

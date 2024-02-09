@@ -28,6 +28,9 @@ func (m *Metadata2) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for Metadata2.
 // It customizes the JSON unmarshaling process for Metadata2 objects.
 func (m *Metadata2) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		SequenceNumber int `json:"sequence_number"`
 	}{}

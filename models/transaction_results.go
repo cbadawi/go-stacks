@@ -37,6 +37,9 @@ func (t *TransactionResults) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TransactionResults.
 // It customizes the JSON unmarshaling process for TransactionResults objects.
 func (t *TransactionResults) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+	}
+
 	temp := &struct {
 		Limit   int           `json:"limit"`
 		Offset  int           `json:"offset"`

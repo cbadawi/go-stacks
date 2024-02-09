@@ -38,6 +38,9 @@ func (t *TransactionFeeEstimateResponse) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for TransactionFeeEstimateResponse.
 // It customizes the JSON unmarshaling process for TransactionFeeEstimateResponse objects.
 func (t *TransactionFeeEstimateResponse) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		EstimatedCostScalar    int           `json:"estimated_cost_scalar"`
 		CostScalarChangeByByte *float64      `json:"cost_scalar_change_by_byte,omitempty"`

@@ -43,6 +43,9 @@ func (s *SigningPayload) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for SigningPayload.
 // It customizes the JSON unmarshaling process for SigningPayload objects.
 func (s *SigningPayload) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Address           *string            `json:"address,omitempty"`
 		AccountIdentifier *RosettaAccount    `json:"account_identifier,omitempty"`

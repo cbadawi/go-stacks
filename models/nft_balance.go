@@ -31,6 +31,9 @@ func (n *NftBalance) toMap() map[string]any {
 // UnmarshalJSON implements the json.Unmarshaler interface for NftBalance.
 // It customizes the JSON unmarshaling process for NftBalance objects.
 func (n *NftBalance) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		return unmarshalResponseString(input)
+	}
 	temp := &struct {
 		Count         string `json:"count"`
 		TotalSent     string `json:"total_sent"`
