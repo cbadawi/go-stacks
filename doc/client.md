@@ -28,7 +28,7 @@ config := stacksblockchainapi.CreateConfiguration(
             ),
         ),
     ),
-    stacksblockchainapi.WithEnvironment(stacksblockchainapi.PRODUCTION),
+    stacks.WithBaseUri(stacks.MAINNET_URI)
 )
 client := stacksblockchainapi.NewClient(config)
 ```

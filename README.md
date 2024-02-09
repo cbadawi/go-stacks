@@ -1,36 +1,19 @@
-# Getting Started with Stacks Blockchain API
+# go-stacks
 
 ## Introduction
 
-Welcome to the API reference overview for the [Stacks Blockchain API](https://docs.hiro.so/get-started/stacks-blockchain-api).
-
-[Download Postman collection](https://hirosystems.github.io/stacks-blockchain-api/collection.json)
+`go-stacks` is a golang sdk for interacting with the stacks blockchain.
+This SDK was generated using the Hiro's OpenAPI specification & [API Matic](https://www.apimatic.io/) with some modifications. It only has one dependancy, and that dependancy has none.
 
 ### Requirements
 
-The SDK requires **Go version 1.18 or above**.
+The SDK requires **Go version 1.22 or above**.
 
 ## Building
 
 ### Install Dependencies
 
 Resolve all the SDK dependencies, using the `go get` command.
-
-## Installation
-
-The following section explains how to use the stacksblockchainapi library in a new project.
-
-### 1. Add SDK as a Dependency to the Application
-
-- Add the following lines to your application's `go.mod` file:
-
-```go
-replace stacksblockchainapi => ".\\Stacks Blockchain API" // local path to the SDK
-
-require stacksblockchainapi v0.0.0
-```
-
-- Resolve the dependencies in the updated `go.mod` file, using the `go get` command.
 
 ## Test the SDK
 
@@ -40,54 +23,31 @@ require stacksblockchainapi v0.0.0
 $ go test
 ```
 
-## Initialize the API Client
+## Quick Start
 
 **_Note:_** Documentation for the client can be found [here.](doc/client.md)
 
-The following parameters are configurable for the API Client:
-
-| Parameter           | Type                                             | Description                                                     |
-| ------------------- | ------------------------------------------------ | --------------------------------------------------------------- |
-| `environment`       | Environment                                      | The API environment. <br> **Default: `Environment.PRODUCTION`** |
-| `httpConfiguration` | [`HttpConfiguration`](doc/http-configuration.md) | Configurable http client options like timeout and retries.      |
-
-The API client can be initialized as follows:
-
 ```go
-config := stacksblockchainapi.CreateConfiguration(
-    stacksblockchainapi.WithHttpConfiguration(
-        stacksblockchainapi.CreateHttpConfiguration(
-            stacksblockchainapi.WithTimeout(0),
-            stacksblockchainapi.WithTransport(http.DefaultTransport),
-            stacksblockchainapi.WithRetryConfiguration(
-                stacksblockchainapi.CreateRetryConfiguration(
-                    stacksblockchainapi.WithMaxRetryAttempts(0),
-                    stacksblockchainapi.WithRetryOnTimeout(true),
-                    stacksblockchainapi.WithRetryInterval(1),
-                    stacksblockchainapi.WithMaximumRetryWaitTime(0),
-                    stacksblockchainapi.WithBackoffFactor(2),
-                    stacksblockchainapi.WithHttpStatusCodesToRetry([]int64{408, 413, 429, 500, 502, 503, 504, 521, 522, 524}),
-                    stacksblockchainapi.WithHttpMethodsToRetry([]string{"GET", "PUT"}),
-                ),
-            ),
-        ),
-    ),
-    stacksblockchainapi.WithEnvironment(stacksblockchainapi.PRODUCTION),
-)
-client := stacksblockchainapi.NewClient(config)
+import stacks "github.com/cbadawi/go-stacks"
+
+func main() {
+	config := stacks.CreateConfiguration(
+		stacks.WithBaseUri(stacks.MAINNET_URI),
+	)
+
+	principal := "SP18W9NPMBEBKWRJA5RNRJKGKW1FHQQ8BF9RXVEGN"
+	unanchored := false
+	untilBlock := "600000"
+
+	client := stacks.NewClient(config)
+	accountsController := client.AccountsController()
+	ctx := context.Background()
+
+	apiResponse, err := accountsController.GetAccountBalance(ctx, principal, &unanchored, &untilBlock)
+	fmt.Println(apiResponse)
+	fmt.Println(err)
+}
 ```
-
-## Environments
-
-The SDK can be configured to use a different environment for making API calls. Available environments are:
-
-### Fields
-
-| Name         | Description         |
-| ------------ | ------------------- |
-| production   | **Default** Mainnet |
-| environment2 | Testnet             |
-| environment3 | Local               |
 
 ## List of APIs
 
