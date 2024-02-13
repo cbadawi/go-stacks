@@ -1,4 +1,4 @@
-module github.com/cbadawi/stacks-go-draft
+module github.com/cbadawi/go-stacks
 
 go 1.22
 

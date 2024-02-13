@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/cbadawi/stacks-go-draft/logger"
+	"github.com/cbadawi/go-stacks/logger"
 )
 
 // DefaultRetryConfiguration returns the default RetryConfiguration for HTTP requests.

@@ -1,7 +1,7 @@
 package stacksblockchainapi
 
 import (
-	"github.com/cbadawi/stacks-go-draft/controllers"
+	"github.com/cbadawi/go-stacks/controllers"
 )
 
 var FeesController controllers.FeesController

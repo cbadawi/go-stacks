@@ -15,27 +15,32 @@ The SDK requires **Go version 1.22 or above**.
 
 Resolve all the SDK dependencies, using the `go get` command.
 
-## Test the SDK
+## TODOs
 
-`Go Testing` is used as the testing framework. To run the unit tests of the SDK, navigate to the `tests` directory of the SDK and run the following command in the terminal:
-
-```bash
-$ go test
-```
+- [] fix and improve testing
+- [] implement (de)serializing transactions
 
 ## Quick Start
 
 **_Note:_** Documentation for the client can be found [here.](doc/client.md)
 
 ```go
-import stacks "github.com/cbadawi/go-stacks"
+package main
+
+import (
+	"context"
+	"fmt"
+
+	stacks "github.com/cbadawi/go-stacks"
+)
 
 func main() {
 	config := stacks.CreateConfiguration(
 		stacks.WithBaseUri(stacks.MAINNET_URI),
+		stacks.WithVerbose(true),
 	)
 
-	principal := "SP18W9NPMBEBKWRJA5RNRJKGKW1FHQQ8BF9RXVEGN"
+	principal := "SP3KANBW2C4E5BRPWNTWZCCDGF2F87CW9D9KV0FFK"
 	unanchored := false
 	untilBlock := "600000"
 
@@ -44,9 +49,12 @@ func main() {
 	ctx := context.Background()
 
 	apiResponse, err := accountsController.GetAccountBalance(ctx, principal, &unanchored, &untilBlock)
-	fmt.Println(apiResponse)
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(apiResponse.Data.Stx.Balance)
 }
+
 ```
 
 ## List of APIs

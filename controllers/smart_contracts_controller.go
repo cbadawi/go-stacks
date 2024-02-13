@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cbadawi/stacks-go-draft/errors"
+	"github.com/cbadawi/go-stacks/errors"
 
-	"github.com/cbadawi/stacks-go-draft/models"
+	"github.com/cbadawi/go-stacks/models"
 
 	"github.com/apimatic/go-core-runtime/utilities"
 )

@@ -9,7 +9,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/cbadawi/stacks-go-draft/controllers"
+	"github.com/cbadawi/go-stacks/controllers"
 
 	"github.com/apimatic/go-core-runtime/https"
 )

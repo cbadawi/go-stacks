@@ -3,7 +3,7 @@ package stacksblockchainapi
 import (
 	"os"
 
-	"github.com/cbadawi/stacks-go-draft/logger"
+	"github.com/cbadawi/go-stacks/logger"
 )
 
 // ConfigurationOptions represents a function type that can be used to apply options to the Configuration struct.

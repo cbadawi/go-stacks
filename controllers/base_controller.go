@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/apimatic/go-core-runtime/https"
-	"github.com/cbadawi/stacks-go-draft/logger"
+	"github.com/cbadawi/go-stacks/logger"
 )
 
 // callBuilderFactory is an interface that defines a method to get a CallBuilderFactory.
