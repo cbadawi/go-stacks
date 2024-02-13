@@ -41,6 +41,13 @@ func WithBaseUri(uri string) ConfigurationOptions {
 	}
 }
 
+// WithVerbose is an option that sets the log verbosity in the Configuration.
+func WithVerbose(v bool) ConfigurationOptions {
+	return func(c *Configuration) {
+		c.logger.Verbose = v
+	}
+}
+
 // WithHttpConfiguration is an option that sets the HttpConfiguration in the Configuration.
 func WithHttpConfiguration(httpConfiguration HttpConfiguration) ConfigurationOptions {
 	return func(c *Configuration) {

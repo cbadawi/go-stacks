@@ -39,6 +39,7 @@ func (l Level) String() string {
 // written to, the minimum severity level that log entries will be written for, and a mutex
 // for coordination the writes.
 type Logger struct {
+	Verbose  bool `json:"verbose"`
 	out      io.Writer
 	minLevel Level
 	mu       sync.Mutex
@@ -54,8 +55,8 @@ func NewLogger(out io.Writer, minLevel Level) *Logger {
 }
 
 // TryPrintInfo is a helper that will PrintInfo depending on verbose flag
-func (l *Logger) TryLog(verbose bool, message string, properties map[string]string, level Level) {
-	if verbose == false {
+func (l *Logger) TryLog(message string, properties map[string]string, level Level) {
+	if l.Verbose == false {
 		return
 	}
 	l.print(level, message, properties)

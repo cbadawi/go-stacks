@@ -45,7 +45,7 @@ func validateResponse(response http.Response) error {
 }
 
 func (bc baseController) logCall(req https.CallBuilder, path string, reqType string) (interface{}, *http.Response, error) {
-	bc.logger.TryLog(true, "API Call", map[string]string{"path": path}, logger.LevelInfo)
+	bc.logger.TryLog("API Call", map[string]string{"path": path}, logger.LevelInfo)
 	var result any
 	var resp *http.Response
 	var err error
@@ -58,7 +58,7 @@ func (bc baseController) logCall(req https.CallBuilder, path string, reqType str
 		bc.logger.PrintError(errors.New("Unhandled call type"), nil)
 	}
 	if err != nil {
-		bc.logger.TryLog(true, "API Call Error", map[string]string{"error": fmt.Sprint(err)}, logger.LevelError)
+		bc.logger.TryLog("API Call Error", map[string]string{"error": fmt.Sprint(err)}, logger.LevelError)
 		return result, resp, err
 	}
 
@@ -67,7 +67,7 @@ func (bc baseController) logCall(req https.CallBuilder, path string, reqType str
 	// 	return result, resp, err
 	// }
 
-	bc.logger.TryLog(true, "API Call Response", map[string]string{"code": fmt.Sprint(resp.StatusCode), "status": resp.Status}, logger.LevelInfo)
+	bc.logger.TryLog("API Call Response", map[string]string{"code": fmt.Sprint(resp.StatusCode), "status": resp.Status}, logger.LevelInfo)
 	return result, resp, err
 }
 

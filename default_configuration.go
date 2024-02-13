@@ -42,5 +42,6 @@ func DefaultConfiguration() Configuration {
 		WithEnvironment(PRODUCTION),
 		WithHttpConfiguration(DefaultHttpConfiguration()),
 		WithLogger(loggerHandler),
+		WithVerbose(false),
 	)
 }
