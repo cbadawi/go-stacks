@@ -17,8 +17,8 @@ Resolve all the SDK dependencies, using the `go get` command.
 
 ## TODOs
 
-- [] fix and improve testing
-- [] implement (de)serializing transactions
+- [ ] fix and improve testing
+- [ ] implement (de)serializing transactions
 
 ## Quick Start
 
