@@ -18,12 +18,12 @@ The retryConfiguration can be initialized as follows:
 
 ```go
 retryConfiguration := CreateRetryConfiguration(
-    stacksblockchainapi.WithMaxRetryAttempts(0),
-    stacksblockchainapi.WithRetryOnTimeout(true),
-    stacksblockchainapi.WithRetryInterval(1),
-    stacksblockchainapi.WithMaximumRetryWaitTime(0),
-    stacksblockchainapi.WithBackoffFactor(2),
-    stacksblockchainapi.WithHttpStatusCodesToRetry([]int64{408, 413, 429, 500, 502, 503, 504, 521, 522, 524}),
-    stacksblockchainapi.WithHttpMethodsToRetry([]string{"GET", "PUT"}),
+    stacks.WithMaxRetryAttempts(0),
+    stacks.WithRetryOnTimeout(true),
+    stacks.WithRetryInterval(1),
+    stacks.WithMaximumRetryWaitTime(0),
+    stacks.WithBackoffFactor(2),
+    stacks.WithHttpStatusCodesToRetry([]int64{408, 413, 429, 500, 502, 503, 504, 521, 522, 524}),
+    stacks.WithHttpMethodsToRetry([]string{"GET", "PUT"}),
 )
 ```

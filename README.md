@@ -31,7 +31,7 @@ import (
 	"context"
 	"fmt"
 
-	stacks "github.com/cbadawi/go-stacks"
+	"github.com/cbadawi/go-stacks/stacks"
 )
 
 func main() {

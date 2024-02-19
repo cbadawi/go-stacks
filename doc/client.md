@@ -10,20 +10,20 @@ The following parameters are configurable for the API Client:
 The API client can be initialized as follows:
 
 ```go
-config := stacksblockchainapi.CreateConfiguration(
-    stacksblockchainapi.WithHttpConfiguration(
-        stacksblockchainapi.CreateHttpConfiguration(
-            stacksblockchainapi.WithTimeout(0),
-            stacksblockchainapi.WithTransport(http.DefaultTransport),
-            stacksblockchainapi.WithRetryConfiguration(
-                stacksblockchainapi.CreateRetryConfiguration(
-                    stacksblockchainapi.WithMaxRetryAttempts(0),
-                    stacksblockchainapi.WithRetryOnTimeout(true),
-                    stacksblockchainapi.WithRetryInterval(1),
-                    stacksblockchainapi.WithMaximumRetryWaitTime(0),
-                    stacksblockchainapi.WithBackoffFactor(2),
-                    stacksblockchainapi.WithHttpStatusCodesToRetry([]int64{408, 413, 429, 500, 502, 503, 504, 521, 522, 524}),
-                    stacksblockchainapi.WithHttpMethodsToRetry([]string{"GET", "PUT"}),
+config := stacks.CreateConfiguration(
+    stacks.WithHttpConfiguration(
+        stacks.CreateHttpConfiguration(
+            stacks.WithTimeout(0),
+            stacks.WithTransport(http.DefaultTransport),
+            stacks.WithRetryConfiguration(
+                stacks.CreateRetryConfiguration(
+                    stacks.WithMaxRetryAttempts(0),
+                    stacks.WithRetryOnTimeout(true),
+                    stacks.WithRetryInterval(1),
+                    stacks.WithMaximumRetryWaitTime(0),
+                    stacks.WithBackoffFactor(2),
+                    stacks.WithHttpStatusCodesToRetry([]int64{408, 413, 429, 500, 502, 503, 504, 521, 522, 524}),
+                    stacks.WithHttpMethodsToRetry([]string{"GET", "PUT"}),
                 ),
             ),
         ),
@@ -32,7 +32,7 @@ config := stacksblockchainapi.CreateConfiguration(
     stacks.WithVerbose(true),
 
 )
-client := stacksblockchainapi.NewClient(config)
+client := stacks.NewClient(config)
 ```
 
 ## Stacks Blockchain API Client
