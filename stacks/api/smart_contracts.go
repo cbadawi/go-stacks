@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/cbadawi/go-stacks/stacks/internal/models"
+	"github.com/cbadawi/go-stacks/stacks/models"
 	"github.com/cbadawi/go-stacks/stacks/utils"
 )
 

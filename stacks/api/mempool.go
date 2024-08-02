@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/cbadawi/go-stacks/stacks/internal/models"
+	"github.com/cbadawi/go-stacks/stacks/models"
 )
 
 // MempoolAPIService MempoolAPI service
