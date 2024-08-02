@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	config "github.com/cbadawi/go-stacks/stacks/config"
-	"github.com/cbadawi/go-stacks/stacks/internal/models"
+	"github.com/cbadawi/go-stacks/stacks/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

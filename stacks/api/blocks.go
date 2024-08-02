@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/cbadawi/go-stacks/stacks/internal/models"
+	"github.com/cbadawi/go-stacks/stacks/models"
 )
 
 // BlocksAPIService BlocksAPI service
